@@ -10,7 +10,9 @@ using Image = UnityEngine.UI.Image;
 
 public class DisplayWebCam : MonoBehaviour
 {
-    
+    [SerializeField] private int cameraWidth;
+    [SerializeField] private int cameraHeight;
+
     public WebCamTexture webcamTex { get; protected set; }
     public bool IsReady { get; protected set; }
 
@@ -27,7 +29,7 @@ public class DisplayWebCam : MonoBehaviour
         {
             Debug.Log("Webcam available: " + devices[i].name);
         }
-        webcamTex = new WebCamTexture(devices[0].name);
+        webcamTex = new WebCamTexture(devices[0].name, cameraWidth, cameraHeight);
 
         RawImage img = GetComponent<RawImage>();
         img.texture = webcamTex;
