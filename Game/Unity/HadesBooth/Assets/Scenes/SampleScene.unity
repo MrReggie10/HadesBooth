@@ -151,9 +151,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1756546543}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 400, y: -225}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &325934968
@@ -626,8 +626,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 006115c5b28c00d4dbd11cb6a511eea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DisplayWebCam
-  cameraWidth: 1280
-  cameraHeight: 960
+  cameraWidth: 0
+  cameraHeight: 0
 --- !u!114 &1850428253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,6 +774,7 @@ MonoBehaviour:
   hsvLowerBounds: {x: 0, y: 0, z: 230}
   hsvUpperBounds: {x: 180, y: 20, z: 255}
   webcam: {fileID: 1850428252}
+  canvas: {fileID: 1756546542}
   dot: {fileID: 325934967}
 --- !u!4 &2057494113
 Transform:

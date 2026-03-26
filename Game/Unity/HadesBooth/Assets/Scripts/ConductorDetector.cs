@@ -2,16 +2,18 @@ using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.Features2dModule;
 using OpenCVForUnity.ImgprocModule;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ConductorDetector : MonoBehaviour
 {
     [SerializeField] protected Vector3 hsvLowerBounds;
     [SerializeField] protected Vector3 hsvUpperBounds = new(180, 255, 255);
     [SerializeField] protected DisplayWebCam webcam;
+    [SerializeField] protected Canvas canvas;
     [SerializeField] protected RectTransform dot;
+    protected Image dotImage;
 
-    public int wandX { get; protected set; }
-    public int wandY { get; protected set; }
+    public NoteColor currentNoteColor { get; protected set; }
 
     protected SimpleBlobDetector blobDetector;
 
@@ -25,12 +27,14 @@ public class ConductorDetector : MonoBehaviour
         param.set_blobColor(255);
 
         blobDetector = SimpleBlobDetector.create(param);
+        
+        if (!dot?.TryGetComponent(out dotImage) ?? false) Debug.LogWarning("Conductor dot does not have an image");
     }
 
     protected Mat GetMaskedImage()
     {
         Mat rgbMat = webcam.GetRGBCameraImageMatrix();
-        Mat hsvMat = new Mat();
+        using Mat hsvMat = new Mat();
         Mat mask = new Mat();
         
         Imgproc.cvtColor(rgbMat, hsvMat, Imgproc.COLOR_RGB2HSV);
@@ -39,7 +43,6 @@ public class ConductorDetector : MonoBehaviour
         Scalar upper = new Scalar(hsvUpperBounds.x, hsvUpperBounds.y, hsvUpperBounds.z);
         Core.inRange(hsvMat, lower, upper, mask);
         
-        hsvMat.Dispose();
         return mask;
     }
 
@@ -47,11 +50,11 @@ public class ConductorDetector : MonoBehaviour
     void Update()
     {
         if (!webcam.IsReady) return;
-        Mat mask = GetMaskedImage();
+        using Mat mask = GetMaskedImage();
         MatOfKeyPoint keypointMat = new MatOfKeyPoint();
         blobDetector.detect(mask, keypointMat);
         KeyPoint[] keypoints = keypointMat.toArray();
-        Debug.Log($"There are {keypoints.Length} keypoints");
+        // Debug.Log($"There are {keypoints.Length} keypoints");
         if (keypoints.Length == 0)
         {
             dot.position = new Vector3(-5000, -5000, 0);
@@ -66,8 +69,50 @@ public class ConductorDetector : MonoBehaviour
             }
             //Debug.Log($"Keypoint centered at ({kp.pt.x}, {kp.pt.y}) and size is {kp.size}");
         }
-        float dotPositionX = ((float)largest.pt.x)/1280*800;
-        float dotPositionY = (-(float)largest.pt.y)/960*450 + 450;
-        dot.position = new Vector3(dotPositionX, dotPositionY, 0);
+
+        bool leftX = largest.pt.x <= webcam.width / 2f;
+        bool upperY = largest.pt.y <= webcam.height / 2f;
+        if (leftX)
+        {
+            if (upperY) currentNoteColor = NoteColor.Red;
+            else currentNoteColor = NoteColor.Cyan;
+        }
+        else
+        {
+            if (upperY) currentNoteColor = NoteColor.Blue;
+            else currentNoteColor = NoteColor.Yellow;
+        }
+        
+        DisplayDot(largest.pt, currentNoteColor);
+    }
+
+    void DisplayDot(Point imageFramePoint, NoteColor color)
+    {
+        if (!dot || !canvas) return;
+        float webcamX = (float)imageFramePoint.x;
+        float webcamY = (float)imageFramePoint.y;
+        float canvasWidth = canvas.pixelRect.width;
+        float canvasHeight = canvas.pixelRect.height;
+        float canvasX = canvasWidth / webcam.width * webcamX - canvasWidth / 2f;
+        float canvasY = -canvasHeight / webcam.height * webcamY + canvasHeight / 2f;
+        dot.localPosition = new Vector3(canvasX, canvasY, 0);
+        if (dotImage)
+        {
+            switch (color)
+            {
+                case NoteColor.Red:
+                    dotImage.color = Color.red;
+                    break;
+                case NoteColor.Blue:
+                    dotImage.color = Color.blue;
+                    break;
+                case NoteColor.Cyan:
+                    dotImage.color = Color.cyan;
+                    break;
+                case NoteColor.Yellow:
+                    dotImage.color = Color.yellow;
+                    break;
+            }
+        }
     }
 }

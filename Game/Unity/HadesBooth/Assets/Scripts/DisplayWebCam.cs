@@ -15,6 +15,8 @@ public class DisplayWebCam : MonoBehaviour
 
     public WebCamTexture webcamTex { get; protected set; }
     public bool IsReady { get; protected set; }
+    public int width => webcamTex.width;
+    public int height => webcamTex.height;
 
     protected Texture2D cachedTexture2d;
     protected Mat cachedRgbaImg;
