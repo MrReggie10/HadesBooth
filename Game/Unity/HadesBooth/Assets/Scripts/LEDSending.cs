@@ -19,19 +19,19 @@ public class LEDSending : MonoBehaviour
     {
         if(counter < 60)
         {
-            yield return StartCoroutine(SendRed);
+            StartCoroutine(SendRed());
         }
         else if (counter < 120)
         {
-            yield return StartCoroutine(SendBlue);
+            StartCoroutine(SendBlue());
         }
         else if (counter < 180)
         {
-            yield return StartCoroutine(SendYellow);
+            StartCoroutine(SendYellow());
         }
         else
         {
-            yield return StartCoroutine(SendCyan);
+            StartCoroutine(SendCyan());
         }
 
         counter++;
