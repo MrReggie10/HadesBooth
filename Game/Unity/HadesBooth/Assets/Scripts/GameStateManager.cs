@@ -1,88 +1,59 @@
 /*
 Manages the game's state
 see https://miro.com/app/board/uXjVGztfbBg=/ for the Finite State Machine
-By: Taylor Roberts, 
+By: Taylor Roberts, Ben Morris, Devika Santosh
 */
 
-
 using UnityEngine;
-using TMPro;
-
-public enum GameState { Wait, Tutorial1, Tutorial1Main, Tutorial1Correct, Tutorial2 }
 
 public class GameStateManager : MonoBehaviour
 {
-    public GameState state = GameState.Wait;
-
-    [Header("Tutorials")]
-    [SerializeField] private int tutorial1NotesPlayed;
-    private int notesPlayed = 0;
-    private Note note = Notes.Red;
-    private Note[] lyreTutorial = new Note[]
-    {
-        Notes.Red,
-        Notes.Blue,
-        Notes.Yellow,
-        Notes.Cyan
-    };
-
-    [Header("Misc")]
-    [SerializeField] private bool debugMode;
-    [SerializeField] public TextMeshProUGUI GameStateUI;
-    [SerializeField] public TextMeshProUGUI miscUI;
     // TODO: add keybinds to skip through states
+    public State<GameStatus, DefaultTransition> state;
+
+    [SerializeField] protected GameStatus gameStatus;
+
+    private void Awake()
+    {
+        GameNetworkedStateMachine stateMachine = new GameNetworkedStateMachine(gameStatus);
+
+        ResetAndWait reset = new ResetAndWait(gameStatus, id:"Reset and wait for next game");
+        ConductorTutorial conductorTutorial = new ConductorTutorial(gameStatus, "Conductor tutorial");
+        LyreTutorial lyreTutorial = new LyreTutorial(gameStatus, "Lyre tutorial");
+        LevelState[] levels = new LevelState[gameStatus.numLevels];
+        for (int levelNum = 1; levelNum <= gameStatus.numLevels; levelNum++)
+        {
+            levels[levelNum - 1] = new LevelState(gameStatus, levelNum, $"Level {levelNum}");
+        }
+        ShowEnding ending = new ShowEnding(gameStatus);
+        
+        stateMachine.SetInitialState(reset);
+        stateMachine.AddTransition(reset, conductorTutorial);
+        stateMachine.AddTransition(conductorTutorial, lyreTutorial);
+        stateMachine.AddTransition(lyreTutorial, levels[0]);
+        for (int idx = 1; idx < levels.Length; idx++)
+        {
+            stateMachine.AddTransition(levels[idx - 1], levels[idx]);
+        }
+        stateMachine.AddTransition(levels[^1], ending);
+        stateMachine.AddTransition(ending, reset);
+
+        state = stateMachine;
+    }
 
     void Start()
     {
-
+        state.Setup();
     }
 
     void Update()
     {
-        GameStateUI.text = state.ToString();
-        switch (state)
-        {
-            case GameState.Wait:
-                // TODO: start game only when the user presses a button on the lyre (or something)
-                if (debugMode && Input.anyKeyDown)
-                {
-                    state = GameState.Tutorial1;
-                    Debug.Log("Transitioning from Wait -> Tutorial1");
-                }
-                break;
-            case GameState.Tutorial1:
-                notesPlayed = 0;
-                state = GameState.Tutorial1Main;
-                Debug.Log("Transitioning from Tutorial1 -> Tutorial1Main");
-                break;
-            case GameState.Tutorial1Main:
-                if (notesPlayed >= tutorial1NotesPlayed)
-                {
-                    state = GameState.Tutorial2;
-                    Debug.Log("Transitioning from Tutorial1Main-> Tutorial2");
-                }
-                else
-                {
-                    note = Notes.Red; // TODO: note = get conductor note (wait for conductor to finish their stuff)
+        state.Update();
+    }
 
-                    miscUI.text = "note: " + note.noteColor.ToString() + "\n" + "notesPlayed: " + notesPlayed.ToString();
-                    if (note == lyreTutorial[notesPlayed])
-                    {
-                        state = GameState.Tutorial1Correct;
-                        Debug.Log("Transitioning from Tutorial1Main -> Tutorial1Correct");
-                    }
-                }
-                break;
-            case GameState.Tutorial1Correct:
-                // play note audio
-                notesPlayed += 1;
-                state = GameState.Tutorial1Main;
-                Debug.Log("Transitioning from Tutorial1Correct -> Tutorial1Main");
-                break;
-            case GameState.Tutorial2:
-                notesPlayed = 0;
-                // state = GameState.Tutorial2Main;
-                break;
-        }
+    private void LateUpdate()
+    {
+        // probably not needed but just in case we throw things in there
+        state.LateUpdate();
     }
 }

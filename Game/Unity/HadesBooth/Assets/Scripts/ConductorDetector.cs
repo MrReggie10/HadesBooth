@@ -13,7 +13,7 @@ public class ConductorDetector : MonoBehaviour
     [SerializeField] protected RectTransform dot;
     protected Image dotImage;
 
-    public NoteColor currentNoteColor { get; protected set; }
+    public Note? currentNote { get; protected set; }
 
     protected SimpleBlobDetector blobDetector;
 
@@ -58,6 +58,7 @@ public class ConductorDetector : MonoBehaviour
         if (keypoints.Length == 0)
         {
             dot.position = new Vector3(-5000, -5000, 0);
+            currentNote = null;
             return;
         }
         KeyPoint largest = keypoints[0];
@@ -74,16 +75,16 @@ public class ConductorDetector : MonoBehaviour
         bool upperY = largest.pt.y <= webcam.height / 2f;
         if (leftX)
         {
-            if (upperY) currentNoteColor = NoteColor.Red;
-            else currentNoteColor = NoteColor.Cyan;
+            if (upperY) currentNote = Notes.Red;
+            else currentNote = Notes.Cyan;
         }
         else
         {
-            if (upperY) currentNoteColor = NoteColor.Blue;
-            else currentNoteColor = NoteColor.Yellow;
+            if (upperY) currentNote = Notes.Blue;
+            else currentNote = Notes.Yellow;
         }
         
-        DisplayDot(largest.pt, currentNoteColor);
+        DisplayDot(largest.pt, currentNote.Value.noteColor);
     }
 
     void DisplayDot(Point imageFramePoint, NoteColor color)

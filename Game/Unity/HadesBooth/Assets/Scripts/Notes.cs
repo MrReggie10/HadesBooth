@@ -4,6 +4,8 @@ Used by our Lyre, Conductor, Flower wall, lights, etc.
 By: Taylor Roberts
 */
 
+using UnityEngine;
+
 public enum NoteColor { Red, Blue, Yellow, Cyan }
 public struct Note
 {
@@ -12,6 +14,11 @@ public struct Note
     public Note(NoteColor noteColor)
     {
         this.noteColor = noteColor;
+    }
+
+    public Color GetColor()
+    {
+        return Color.black;  // TODO note colors
     }
 
     // boilerplate so == works
@@ -35,6 +42,11 @@ public struct Note
     public override int GetHashCode()
     {
         return noteColor.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        return noteColor.ToString();
     }
 }
 
