@@ -10,6 +10,7 @@ void setup() {
   // Declare pins as output:
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
+  Serial.begin(115200);
 }
 
 void flowersDown() {
@@ -19,9 +20,9 @@ void flowersDown() {
   for (int i = 0; i < stepsPerRevolution; i++) {
     // These four lines result in 1 step:
     digitalWrite(stepPin, HIGH);
-    delayMicroseconds(2000);
+    delay(1);
     digitalWrite(stepPin, LOW);
-    delayMicroseconds(2000);
+    delay(1);
   }
 
   delay(1000);
@@ -34,9 +35,9 @@ void flowersUp() {
   for (int i = 0; i < stepsPerRevolution; i++) {
     // These four lines result in 1 step:
     digitalWrite(stepPin, HIGH);
-    delayMicroseconds(2000);
+    delay(1);
     digitalWrite(stepPin, LOW);
-    delayMicroseconds(2000);
+    delay(1);
   }
 
   delay(1000);

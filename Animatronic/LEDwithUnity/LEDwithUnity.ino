@@ -25,7 +25,7 @@ void setup() {
   
   userInput.reserve(100);
 
-  FastLED.addLeds<WS2812, DATA_PIN, GRB>(leds, NUM_LEDS);
+  FastLED.addLeds<WS2812, LED_D_PIN, GRB>(leds, NUM_LEDS);
 
   Serial.begin(115200); // Starts the serial communication
 }
@@ -63,10 +63,13 @@ void loop() {
       leds[LED_ADDR_1] = CRGB(0, 0, 0);
       leds[LED_ADDR_2] = CRGB(0, 0, 0);
       leds[LED_ADDR_3] = CRGB(0, 0, 0);
-      leds[LED_ADDR_4] = CRGB(255, 255, 0);
+      leds[LED_ADDR_4] = CRGB(0, 255, 255);
       Serial.print("d\n");
     } else {
-
+      leds[LED_ADDR_1] = CRGB(0, 0, 0);
+      leds[LED_ADDR_2] = CRGB(0, 0, 0);
+      leds[LED_ADDR_3] = CRGB(0, 0, 0);
+      leds[LED_ADDR_4] = CRGB(0, 0, 0);
       Serial.print("n\n");
     }
     stringComplete = false;
