@@ -8,19 +8,21 @@ public class ConductorTutorial : GameNetworkedStateMachine
         // TODO set tutorial order, probably make editable in GameStatus
         Note[] notes = { Notes.Red, Notes.Blue, Notes.Yellow, Notes.Cyan };
 
+        PlayConductorNotes playNotes = new PlayConductorNotes(status, notes, status.conductorTimePerNoteOnFlower, "Play notes for conductor tutorial");
         WaitForConductorNote[] waitForNotes = new WaitForConductorNote[notes.Length];
         GiveFeedback[] successes = new GiveFeedback[notes.Length];
         GiveFeedback[] fails = new GiveFeedback[notes.Length];
 
+        SetInitialState(playNotes);
         for (int idx = 0; idx < notes.Length; idx++)
         {
-            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTutorialTimeForNote, $"Wait for conductor note {idx}");
+            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Wait for conductor note {idx}");
             successes[idx] = new GiveFeedback(status, true, $"Conductor note {idx} success");
             fails[idx] = new GiveFeedback(status, false, $"Conductor note {idx} fail");
 
             if (idx == 0)
             {
-                SetInitialState(waitForNotes[idx]);
+                AddTransition(playNotes, waitForNotes[idx]);
             }
             else
             {

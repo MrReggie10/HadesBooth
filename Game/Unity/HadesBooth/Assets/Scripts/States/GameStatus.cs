@@ -14,11 +14,11 @@ public class GameStatus : MonoBehaviour
 
     [Header("Conductor")]
     [SerializeField] protected ConductorDetector conductorDetector;
-
-    public float conductorTutorialTimeForNote;
+    public float conductorTimePerNoteOnFlower;
+    public float conductorTimeToPlayNote;
 
     [Header("Lyre")]
-    public float timePerFlower;
+    public float lyreTimePerFlower;
     public int numLyreFlowers;
 
     [Header("Misc")]
@@ -47,6 +47,12 @@ public class GameStatus : MonoBehaviour
     {
         // TODO DidPlayersWin - did the players get the good ending?
         return false;
+    }
+
+    public void SetConductorFlower(Note? note)
+    {
+        // TODO SetConductorFlower
+        // if note is null, turn off flower
     }
 }
 

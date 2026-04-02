@@ -29,7 +29,7 @@ public class PlayLyreNote : GameState<SuccessTransition>
         SuccessTransition baseTrans = base.Run();
         if (baseTrans != null) return baseTrans;
 
-        int newFlowerIdx = (int)(timeSinceStart / status.timePerFlower);
+        int newFlowerIdx = (int)(timeSinceStart / status.lyreTimePerFlower);
         if (newFlowerIdx != currentFlowerIdx)
         {
             if (newFlowerIdx >= status.numLyreFlowers) return SuccessTransition.Fail;

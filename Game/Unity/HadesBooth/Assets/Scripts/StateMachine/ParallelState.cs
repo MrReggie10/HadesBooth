@@ -22,7 +22,7 @@ public class ParallelState<TStatus> : State<TStatus, DefaultTransition>
         runningStates = new HashSet<IState<TStatus>>();
     }
 
-    public virtual void AddState(State<TStatus, ITransition> state)
+    public void AddState(State<TStatus, ITransition> state)
     {
         states.Add(state);
     }
@@ -66,6 +66,15 @@ public class ParallelState<TStatus> : State<TStatus, DefaultTransition>
         foreach (IState<TStatus> state in runningStates)
         {
             state.LateUpdate();
+        }
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        foreach (IState<TStatus> state in runningStates)
+        {
+            state.FixedUpdate();
         }
     }
 

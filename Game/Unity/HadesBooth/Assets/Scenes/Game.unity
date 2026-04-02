@@ -849,10 +849,12 @@ MonoBehaviour:
   score: 0
   levelNum: 0
   notesPlayedThisLevel: 0
+  successfulNotesPlayedThisLevel: 0
   numLevels: 3
   conductorDetector: {fileID: 966643791}
-  conductorTutorialTimeForNote: 2
-  timePerFlower: 0.2
+  conductorTimePerNoteOnFlower: 0.2
+  conductorTimeToPlayNote: 0.3
+  lyreTimePerFlower: 0.1
   numLyreFlowers: 8
   debugMode: 0
   gameStateUI: {fileID: 2042862687}

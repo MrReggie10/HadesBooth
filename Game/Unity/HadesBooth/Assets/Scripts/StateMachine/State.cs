@@ -8,6 +8,7 @@ public interface IState<TStatus>
     public void Setup();
     public ITransition Update();
     public void LateUpdate();
+    public void FixedUpdate();
     public void Cleanup();
 }
 
@@ -31,6 +32,7 @@ public interface IState<TStatus>
  *      Returns null if the state should continue running, or some Transition type if not
  * - LateUpdate: runs every loop this state is active, during Unity's LateUpdate. Note that transitions happen in
  *      Update, so it is possible that LateUpdate will be called the loop before the first Update is called
+ * - FixedUpdate: runs whenever Unity's FixedUpdate is called when this state is active
  * - Cleanup: runs once when this state finishes
  *
  * Transitions:
@@ -84,6 +86,8 @@ public class State<TStatus, TTransition> : IState<TStatus> where TTransition : I
     ITransition IState<TStatus>.Update() => Update();
     
     public virtual void LateUpdate() {}
+    
+    public virtual void FixedUpdate() {}
 
     public virtual void Cleanup()
     {
