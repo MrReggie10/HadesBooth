@@ -61,6 +61,12 @@ public class LinearStateMachine<TStatus> : State<TStatus, DefaultTransition>
         if (currentState < stateOrder.Count) stateOrder[currentState].LateUpdate();
     }
 
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (currentState < stateOrder.Count) stateOrder[currentState].FixedUpdate();
+    }
+
     public override void Cleanup()
     {
         base.Cleanup();

@@ -101,6 +101,12 @@ public class NetworkedStateMachine<TStatus> : State<TStatus, DefaultTransition>
         currentState?.LateUpdate();
     }
 
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        currentState?.FixedUpdate();
+    }
+
     public override void Cleanup()
     {
         base.Cleanup();
