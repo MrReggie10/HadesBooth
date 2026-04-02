@@ -56,4 +56,10 @@ public class GameStateManager : MonoBehaviour
         // probably not needed but just in case we throw things in there
         state.LateUpdate();
     }
+
+    private void FixedUpdate()
+    {
+        // probably not needed but just in case we throw things in there
+        state.FixedUpdate();
+    }
 }
