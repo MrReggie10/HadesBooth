@@ -1,23 +1,20 @@
 
 #include <FastLED.h>
 
-const int NUM_LEDS = 144;
-
-CRGB leds[NUM_LEDS];
+CRGB leds[2];
 
 void setup() {
-  // put your setup code here, to run once:
   pinMode(3, OUTPUT);
-  FastLED.addLeds<WS2812, 3, GRB>(leds, NUM_LEDS);
+  FastLED.addLeds<WS2812, 3, GRB>(leds, 2);
+  Serial.begin(115200);
 }
 
 void loop() {
-  for(int i = 0; i < NUM_LEDS; i++) {
-    leds[i] = CRGB(255, 0, 0);
-  }
-
+  leds[0] = CRGB(255, 0, 0);
+  leds[1] = CRGB(255, 0, 0);
   FastLED.show();
-  delay(1000);
+  delay(100);
+
   // put your main code here, to run repeatedly:
   
 }

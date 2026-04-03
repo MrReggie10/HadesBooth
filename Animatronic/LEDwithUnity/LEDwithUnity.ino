@@ -46,24 +46,24 @@ void loop() {
       Serial.print("d\n");
     } else if (userInput.equals("b")){
       // hide: return to hiding
-      leds[LED_ADDR_1] = CRGB(0, 0, 0);
+      leds[LED_ADDR_1] = CRGB(127, 0, 255);
       leds[LED_ADDR_2] = CRGB(0, 0, 255);
       leds[LED_ADDR_3] = CRGB(0, 0, 0);
       leds[LED_ADDR_4] = CRGB(0, 0, 0);
       Serial.print("d\n");
     } else if (userInput.equals("y")){
       // growl: gnash teeth
-      leds[LED_ADDR_1] = CRGB(0, 0, 0);
+      leds[LED_ADDR_1] = CRGB(255, 255, 0);
       leds[LED_ADDR_2] = CRGB(0, 0, 0);
       leds[LED_ADDR_3] = CRGB(255, 255, 0);
       leds[LED_ADDR_4] = CRGB(0, 0, 0);
       Serial.print("d\n");
     } else if (userInput.equals("c")){
       // growl: gnash teeth
-      leds[LED_ADDR_1] = CRGB(0, 0, 0);
+      leds[LED_ADDR_1] = CRGB(0, 255, 127);
       leds[LED_ADDR_2] = CRGB(0, 0, 0);
       leds[LED_ADDR_3] = CRGB(0, 0, 0);
-      leds[LED_ADDR_4] = CRGB(0, 255, 255);
+      leds[LED_ADDR_4] = CRGB(0, 255, 127);
       Serial.print("d\n");
     } else {
       leds[LED_ADDR_1] = CRGB(0, 0, 0);

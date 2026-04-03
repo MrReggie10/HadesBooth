@@ -10,7 +10,6 @@ void setup() {
   // Declare pins as output:
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
-  Serial.begin(115200);
 }
 
 void flowersDown() {
@@ -48,5 +47,5 @@ void loop() {
   flowersDown();
 
   // Code to make flowers go up
-  flowersUp();
+  //flowersUp();
 }
