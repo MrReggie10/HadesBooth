@@ -60,5 +60,6 @@ public class PlayLyreNote : GameState<SuccessTransition>
     {
         base.Cleanup();
         status.notesPlayedThisLevel++;
+        status.ClearLyreNote();
     }
 }

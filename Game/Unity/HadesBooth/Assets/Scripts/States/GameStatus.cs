@@ -1,4 +1,5 @@
 ﻿
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -20,6 +21,7 @@ public class GameStatus : MonoBehaviour
     [Header("Lyre")]
     public float lyreTimePerFlower;
     public int numLyreFlowers;
+    protected Note? currentLyreNote = null;
 
     [Header("Misc")]
     public bool debugMode;
@@ -33,8 +35,33 @@ public class GameStatus : MonoBehaviour
 
     public Note? CurrentLyreNote()
     {
-        // TODO current lyre note
-        return null;
+        return currentLyreNote;
+    }
+
+    public void HandleMessage(string msg)
+    {
+        switch (msg)
+        {
+            case "r":
+                currentLyreNote = Notes.Red;
+                break;
+            case "b":
+                currentLyreNote = Notes.Blue;
+                break;
+            case "y":
+                currentLyreNote = Notes.Yellow;
+                break;
+            case "c":
+                currentLyreNote = Notes.Cyan;
+                break;
+            default:
+                throw new ArgumentException($"Unknown lyre message: {msg}");
+        }
+    }
+
+    public void ClearLyreNote()
+    {
+        currentLyreNote = null;
     }
 
     public bool WasLevelSuccessful()
