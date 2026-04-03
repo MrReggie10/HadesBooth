@@ -57,34 +57,34 @@ public class DmxSender : MonoBehaviour
                 // everything already blacked out
                 break;
             case Cue.Wait:
-                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(250, 96, 12, 127));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(242, 50, 29, 127));
+                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(255, 71, 0, 127));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(242, 49, 0, 127));
                 break;
             case Cue.GoodEnding:
-                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(138, 230, 69, 200));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(69, 174, 255, 200));
+                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(255, 0, 170, 255));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(0, 255, 0, 255));
                 fixtures[(int)FixtureID.Good].Write(dmxData, new Color32(255,255,255,255));
                 break;
             case Cue.BadEnding:
-                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(250, 96, 12, 127));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(242, 50, 29, 127));
+                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(255, 71, 0, 127));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(242, 49, 0, 127));
                 fixtures[(int)FixtureID.Bad].Write(dmxData, new Color32(255,255,255,255));                
                 break;
             case Cue.Spring0:
-                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(225, 255, 135, 100));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(255, 207, 135, 100));
+                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32 (255, 71, 0, 127));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(240, 80, 0, 70));
                 break;
             case Cue.Spring1:
-                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(138, 230, 69, 127));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(69, 174, 255, 127));
+                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(255, 166, 0, 127));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(255, 210, 10, 127));
                 break;
             case Cue.Spring2:
-                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(0, 255, 0, 255));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(238, 255, 0, 255));
+                fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(100, 200, 50, 200));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(200, 255, 60, 200));
                 break;
             case Cue.Spring3:
                 fixtures[(int)FixtureID.Conductor].Write(dmxData, new Color32(255, 0, 170, 255));
-                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(0, 255, 255, 255));
+                fixtures[(int)FixtureID.Lyre].Write(dmxData, new Color32(0, 255, 0, 255));
                 break;
             default:
                 Debug.LogError($"cue {cue} not programmed");
