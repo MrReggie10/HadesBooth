@@ -32,9 +32,9 @@ public class Fixture
             return;
         }
 
-        universe[address]     = color.r;
-        universe[address + 1] = color.g;
-        universe[address + 2] = color.b;
-        universe[address + 3] = color.a; // alpha = dimmer
+        universe[address]     = color.a; // alpha = dimmer
+        universe[address + 1] = color.r;
+        universe[address + 2] = color.g;
+        universe[address + 3] = color.b;
     }
 }
