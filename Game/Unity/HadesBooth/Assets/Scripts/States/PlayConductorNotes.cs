@@ -4,9 +4,10 @@ public class PlayConductorNotes : GameLinearStateMachine
 {
     public PlayConductorNotes(GameStatus status, Note[] notes, float timePerNote, string id = null) : base(status, id)
     {
-        foreach (Note note in notes)
+        for (int idx = 0; idx < notes.Length; idx++)
         {
-            AddState(new WaitForTime(status, timePerNote, setup: () => status.SetConductorFlower(note)));
+            Note note = notes[idx];
+            AddState(new WaitForTime(status, timePerNote, setup: () => status.SetConductorFlower(note), id: $"Playing note {idx} ({note.noteColor})"));
         }
     }
 

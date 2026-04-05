@@ -308,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DisplayWebCam
   cameraWidth: 0
   cameraHeight: 0
+  cameraToUse: 1
 --- !u!114 &359415886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,8 +1053,8 @@ MonoBehaviour:
   successfulNotesPlayedThisLevel: 0
   numLevels: 3
   conductorDetector: {fileID: 966643791}
-  conductorTimePerNoteOnFlower: 0.2
-  conductorTimeToPlayNote: 0.3
+  conductorTimePerNoteOnFlower: 2
+  conductorTimeToPlayNote: 10
   lyreTimePerFlower: 1
   numLyreFlowers: 6
   lyreAcceptWindow: 0.25

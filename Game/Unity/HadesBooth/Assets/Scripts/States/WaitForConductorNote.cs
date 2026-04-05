@@ -11,12 +11,6 @@ public class WaitForConductorNote : GameState<SuccessTransition>
         this.maxWaitTime = maxWaitTime;
     }
 
-    public override void Setup()
-    {
-        base.Setup();
-        // TODO set conductor flower from targetNote.GetColor
-    }
-
     protected override SuccessTransition Run()
     {
         SuccessTransition baseTrans = base.Run();

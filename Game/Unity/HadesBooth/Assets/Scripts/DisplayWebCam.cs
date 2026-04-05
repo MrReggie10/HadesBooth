@@ -12,6 +12,7 @@ public class DisplayWebCam : MonoBehaviour
 {
     [SerializeField] private int cameraWidth;
     [SerializeField] private int cameraHeight;
+    [SerializeField] private int cameraToUse;
 
     public WebCamTexture webcamTex { get; protected set; }
     public bool IsReady { get; protected set; }
@@ -27,11 +28,9 @@ public class DisplayWebCam : MonoBehaviour
         IsReady = false;
         
         WebCamDevice[] devices = WebCamTexture.devices;
-        for (int i = 0; i < devices.Length; i++)
-        {
-            Debug.Log("Webcam available: " + devices[i].name);
-        }
-        webcamTex = new WebCamTexture(devices[1].name, cameraWidth, cameraHeight);
+        string camName = devices[cameraToUse].name;
+        Debug.Log($"Using camera {camName}");
+        webcamTex = new WebCamTexture(camName, cameraWidth, cameraHeight);
 
         RawImage img = GetComponent<RawImage>();
         img.texture = webcamTex;

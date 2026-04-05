@@ -79,6 +79,7 @@ public class GameStatus : MonoBehaviour
 
     public void SetConductorFlower(Note? note)
     {
+        Debug.Log($"Setting conductor flower to {note?.noteColor}");
         // TODO SetConductorFlower
         // if note is null, turn off flower
     }
