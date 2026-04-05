@@ -21,6 +21,7 @@ public class GameStatus : MonoBehaviour
     [Header("Lyre")]
     public float lyreTimePerFlower;
     public int numLyreFlowers;
+    public float lyreAcceptWindow;
     protected Note? currentLyreNote = null;
 
     [Header("Misc")]

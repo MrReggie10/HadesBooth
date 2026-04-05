@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 public class WaitForLyreNote : GameState<SuccessTransition>
 {
     protected NoteColor targetNote;
@@ -18,9 +19,13 @@ public class WaitForLyreNote : GameState<SuccessTransition>
         SuccessTransition baseTrans = base.Run();
         if (baseTrans != null) return baseTrans;
 
-        NoteColor? currentNote = NoteColor.Red; // TODO get lyre note
-        if (currentNote == targetNote) return SuccessTransition.Success;
-        if (currentNote.HasValue && failOnIncorrectNote) return SuccessTransition.Fail;
+        Note? currentNote = status.CurrentLyreNote();
+        if (currentNote.HasValue)
+        {
+            Debug.Log($"WaitForLyreNote target={targetNote} got={currentNote.Value.noteColor} time={timeSinceStart:F2}");
+            if (currentNote.Value.noteColor == targetNote) return SuccessTransition.Success;
+            if (failOnIncorrectNote) return SuccessTransition.Fail;
+        }
 
         return timeSinceStart > maxWaitTime ? SuccessTransition.Fail : null;
     }

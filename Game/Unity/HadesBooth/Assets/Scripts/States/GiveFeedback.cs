@@ -4,10 +4,12 @@ using UnityEngine;
 public class GiveFeedback : GameState<DefaultTransition>
 {
     protected bool didGood;
+    protected float displayTime;
     
-    public GiveFeedback(GameStatus status, bool didGood, string id = null) : base(status, id)
+    public GiveFeedback(GameStatus status, bool didGood, string id = null, float displayTime = 1f) : base(status, id)
     {
         this.didGood = didGood;
+        this.displayTime = displayTime;
     }
 
     public override void Setup()
@@ -15,11 +17,11 @@ public class GiveFeedback : GameState<DefaultTransition>
         base.Setup();
         if (didGood)
         {
-            // TODO play good sound, make lights green or something
+            // TODO play good sound
         }
         else
         {
-            // TODO play bad sound, make lights red or something
+            // TODO play bad sound
         }
     }
 
@@ -29,12 +31,15 @@ public class GiveFeedback : GameState<DefaultTransition>
         if (baseTrans != null) return baseTrans;
 
         // TODO return DefaultTransition.Default when sound is over
+        // For now, returns after displayTime
+        if (timeSinceStart > displayTime) {
+            return DefaultTransition.Default;
+        }
         return null;
     }
 
     public override void Cleanup()
     {
         base.Cleanup();
-        // TODO reset lights
     }
 }

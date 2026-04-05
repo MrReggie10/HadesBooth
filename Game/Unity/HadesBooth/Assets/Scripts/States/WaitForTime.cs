@@ -11,6 +11,8 @@ public class WaitForTime : GameState<DefaultTransition>
     public WaitForTime(GameStatus status, float timeToWait, Action setup = null, Action cleanup = null, string id = null) : base(status, id)
     {
         this.timeToWait = timeToWait;
+        this.setup = setup;
+        this.cleanup = cleanup;
     }
 
     public override void Setup()

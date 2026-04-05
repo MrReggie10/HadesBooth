@@ -31,7 +31,7 @@ public class DisplayWebCam : MonoBehaviour
         {
             Debug.Log("Webcam available: " + devices[i].name);
         }
-        webcamTex = new WebCamTexture(devices[0].name, cameraWidth, cameraHeight);
+        webcamTex = new WebCamTexture(devices[1].name, cameraWidth, cameraHeight);
 
         RawImage img = GetComponent<RawImage>();
         img.texture = webcamTex;

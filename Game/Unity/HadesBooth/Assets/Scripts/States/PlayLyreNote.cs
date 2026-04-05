@@ -39,12 +39,21 @@ public class PlayLyreNote : GameState<SuccessTransition>
         }
 
         Note? lyreNote = status.CurrentLyreNote();
+
+        if (status.miscUi != null)
+        {
+            status.miscUi.text = $"Lyre: Flower {currentFlowerIdx+1}/{status.numLyreFlowers}";
+        }
+
         if (lyreNote == null) return null;
-        if (lyreNote == targetNote && currentFlowerIdx == status.numLyreFlowers - 1)
+        Debug.Log($"PlayLyreNote target={targetNote} got={lyreNote.Value.noteColor} flowerIdx={currentFlowerIdx} time={timeSinceStart:F2}");
+
+        if (lyreNote.Value == targetNote && currentFlowerIdx == status.numLyreFlowers - 1)
         {
             status.successfulNotesPlayedThisLevel++;
-            return SuccessTransition.Success;;
+            return SuccessTransition.Success;
         }
+
         return SuccessTransition.Fail;
     }
 
@@ -61,5 +70,9 @@ public class PlayLyreNote : GameState<SuccessTransition>
         base.Cleanup();
         status.notesPlayedThisLevel++;
         status.ClearLyreNote();
+        if (status.miscUi != null)
+        {
+            status.miscUi.text = "";
+        }
     }
 }
