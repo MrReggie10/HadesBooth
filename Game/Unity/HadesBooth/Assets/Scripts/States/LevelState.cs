@@ -43,13 +43,15 @@ public class LevelState : GameNetworkedStateMachine
             }
             else
             {
-                AddTransition(lyreNotes[idx - 1], SuccessTransition.Success, lyreNotes[idx]);
-                AddTransition(lyreNotes[idx - 1], SuccessTransition.Fail, lyreNotes[idx]);
+                AddTransition(lyreNotes[idx - 1], PartialSuccessTransition.Success, lyreNotes[idx]);
+                AddTransition(lyreNotes[idx - 1], PartialSuccessTransition.PartialSuccess, lyreNotes[idx]);
+                AddTransition(lyreNotes[idx - 1], PartialSuccessTransition.Fail, lyreNotes[idx]);
             }
         }
 
-        AddTransition(lyreNotes[^1], SuccessTransition.Success, checkSuccess);
-        AddTransition(lyreNotes[^1], SuccessTransition.Fail, checkSuccess);
+        AddTransition(lyreNotes[^1], PartialSuccessTransition.Success, checkSuccess);
+        AddTransition(lyreNotes[^1], PartialSuccessTransition.PartialSuccess, checkSuccess);
+        AddTransition(lyreNotes[^1], PartialSuccessTransition.Fail, checkSuccess);
         AddTransition(checkSuccess, SuccessTransition.Success, success);
         AddTransition(checkSuccess, SuccessTransition.Fail, fail);
         AddExitTransition(success);

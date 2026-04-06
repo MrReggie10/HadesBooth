@@ -24,7 +24,8 @@ public class GameStatus : MonoBehaviour
     public float lyreTimePerFlower;
     public int numLyreFlowers;
     public float lyreAcceptWindow;
-    protected Note? currentLyreNote = null;
+    protected Note?[] currentLyreNotes = {null, null};
+    public int numLyres => currentLyreNotes.Length;
 
     [Header("Misc")]
     public bool debugMode;
@@ -39,35 +40,38 @@ public class GameStatus : MonoBehaviour
     return conductorDetector.currentNote;
     }
 
-    public Note? CurrentLyreNote()
+    public Note? CurrentLyreNote(int lyreIdx = 0)
     {
-        return currentLyreNote;
+        return currentLyreNotes[lyreIdx];
     }
 
-    public void HandleMessage(string msg)
+    public void HandleMessage(string msg, int lyreIdx = 0)
     {
+        Note note;
         switch (msg)
         {
             case "r":
-                currentLyreNote = Notes.Red;
+                note = Notes.Red;
                 break;
             case "b":
-                currentLyreNote = Notes.Blue;
+                note = Notes.Blue;
                 break;
             case "y":
-                currentLyreNote = Notes.Yellow;
+                note = Notes.Yellow;
                 break;
             case "c":
-                currentLyreNote = Notes.Cyan;
+                note = Notes.Cyan;
                 break;
             default:
                 throw new ArgumentException($"Unknown lyre message: {msg}");
         }
+
+        currentLyreNotes[lyreIdx] = note;
     }
 
-    public void ClearLyreNote()
+    public void ClearLyreNote(int lyreIdx = 0)
     {
-        currentLyreNote = null;
+        currentLyreNotes[lyreIdx] = null;
     }
 
     public bool WasLevelSuccessful()

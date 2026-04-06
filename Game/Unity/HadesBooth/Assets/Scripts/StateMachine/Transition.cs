@@ -71,3 +71,17 @@ public class SuccessTransition : Transition<SuccessEnum>
     
     public SuccessTransition(SuccessEnum transition) : base(transition) {}
 }
+
+public enum PartialSuccessEnum
+{
+    Success, PartialSuccess, Fail
+}
+
+public class PartialSuccessTransition : Transition<PartialSuccessEnum>
+{
+    public static PartialSuccessTransition Success = new(PartialSuccessEnum.Success);
+    public static PartialSuccessTransition PartialSuccess = new(PartialSuccessEnum.PartialSuccess);
+    public static PartialSuccessTransition Fail = new(PartialSuccessEnum.Fail);
+    
+    public PartialSuccessTransition(PartialSuccessEnum transition) : base(transition) {}
+}
