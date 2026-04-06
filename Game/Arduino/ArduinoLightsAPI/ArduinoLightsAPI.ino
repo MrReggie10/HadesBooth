@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <FastLED.h>
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 #define MAX_EVENTS    64     // Maximum number of tuples we can store
@@ -22,6 +23,9 @@ char    inputBuffer[INPUT_BUFFER_SIZE];
 int     bufferIndex  = 0;
 bool    receiving    = false;    // True once we've seen the leading 'L'
 
+// ─── LED Initialization ───────────────────────────────────────────────────────
+CRGB leds[7];
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 // Grab the next whitespace-delimited token from *p, advance *p past it.
@@ -39,6 +43,21 @@ bool nextToken(char **p, char *out, size_t outLen) {
   }
   out[i] = '\0';
   return i > 0;
+}
+
+// Sort events[0..eventCount-1] by triggerTime ascending (insertion sort).
+// Insertion sort is preferred here — it's simple, in-place, and perfectly
+// efficient for the small N values expected on a microcontroller.
+void sortEvents() {
+    for (int i = 1; i < eventCount; i++) {
+        Event key = events[i];
+        int j = i - 1;
+        while (j >= 0 && (long)(events[j].triggerTime - key.triggerTime) > 0) {
+            events[j + 1] = events[j];
+            j--;
+        }
+        events[j + 1] = key;
+    }
 }
 
 // Parse and load events from inputBuffer. Returns true on success.
@@ -76,6 +95,7 @@ bool parseMessage(unsigned long receiveTime) {
 
   eventCount = count;
   nextEvent  = 0;
+  sortEvents();
   return true;
 }
 
@@ -88,10 +108,29 @@ void handleEvent(const Event &e) {
   Serial.print(e.address);
   Serial.print(F("  color="));
   Serial.println(e.color);
+  int addr = (int) e.address;
+  if(e.color[0] == 'r') {
+    leds[addr] = CRGB(255, 0, 0);
+    Serial.println("Red");
+  } else if(e.color[0] == 'b') {
+    leds[addr] = CRGB(0, 0, 255);
+    Serial.println("Blue");
+  } else if(e.color[0] == 'c') {
+    leds[addr] = CRGB(0, 255, 127);
+    Serial.println("Cyan");
+  } else if(e.color[0] == 'y') {
+    leds[addr] = CRGB(255, 255, 0);
+    Serial.println("Yellow");
+  } else {
+    leds[addr] = CRGB(0, 255, 0);
+  }
+  FastLED.show();
 }
 
 // ─── Arduino Lifecycle ────────────────────────────────────────────────────────
 void setup() {
+  pinMode(4, OUTPUT);
+  FastLED.addLeds<WS2812, 4, GRB>(leds, 7);
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("Ready. Send: L <count> <ms> <addr> <color> ..."));
 }
