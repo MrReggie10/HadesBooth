@@ -111,16 +111,12 @@ void handleEvent(const Event &e) {
   int addr = (int) e.address;
   if(e.color[0] == 'r') {
     leds[addr] = CRGB(255, 0, 0);
-    Serial.println("Red");
   } else if(e.color[0] == 'b') {
     leds[addr] = CRGB(0, 0, 255);
-    Serial.println("Blue");
   } else if(e.color[0] == 'c') {
     leds[addr] = CRGB(0, 255, 127);
-    Serial.println("Cyan");
   } else if(e.color[0] == 'y') {
     leds[addr] = CRGB(255, 255, 0);
-    Serial.println("Yellow");
   } else {
     leds[addr] = CRGB(0, 255, 0);
   }
