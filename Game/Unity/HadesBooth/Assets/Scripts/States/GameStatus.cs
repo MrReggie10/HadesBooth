@@ -7,6 +7,7 @@ public class GameStatus : MonoBehaviour
 {
     [HideInInspector] public int score;
     [HideInInspector] public int levelNum;
+    [HideInInspector] public int performanceRating; // 0-3
     [HideInInspector] public int notesPlayedThisLevel;
     [HideInInspector] public int successfulNotesPlayedThisLevel;
     
@@ -17,6 +18,7 @@ public class GameStatus : MonoBehaviour
     [SerializeField] protected ConductorDetector conductorDetector;
     public float conductorTimePerNoteOnFlower;
     public float conductorTimeToPlayNote;
+    public SerialController conductorController;
 
     [Header("Lyre")]
     public float lyreTimePerFlower;
@@ -29,9 +31,12 @@ public class GameStatus : MonoBehaviour
     public TextMeshProUGUI gameStateUI;
     public TextMeshProUGUI miscUi;
 
+    // blocks indicator LED change
+    protected bool conductorLedFinalized = false;
+
     public Note? CurrentConductorNote()
     {
-        return conductorDetector.currentNote;
+    return conductorDetector.currentNote;
     }
 
     public Note? CurrentLyreNote()
@@ -79,9 +84,45 @@ public class GameStatus : MonoBehaviour
 
     public void SetConductorFlower(Note? note)
     {
-        Debug.Log($"Setting conductor flower to {note?.noteColor}");
-        // TODO SetConductorFlower
-        // if note is null, turn off flower
+        Debug.Log($"Setting conductor flower to {note?.GetColorString()}");
+            if (note == null)
+            {
+                conductorController.SendSerialMessage("k1");
+                return;
+            }
+        if (conductorController != null)
+        {
+            conductorController.SendSerialMessage(note?.GetColorString() + "1");
+        }
+    }
+
+    public void SetConductorLed(Note? note)
+    {
+        // always sets LED to black if necessary
+        if (note == null)
+        {
+            conductorController.SendSerialMessage("k2");
+            return;
+        }
+        // if we've finalized the LED, ignore color sends until reset
+        if (conductorLedFinalized) return;
+        if (conductorController != null)
+        {
+            conductorController.SendSerialMessage(note?.GetColorString() + "2");
+        }
+    }
+
+    public void SetConductorLedFinalized(bool finalized)
+    {
+        conductorLedFinalized = finalized;
+    }
+
+    public void SetConductorLevel()
+    {
+        // TODO: this is untested/broken
+        Debug.Log($"Sending conductor performance rating: {performanceRating}");
+        conductorController.SendSerialMessage($"{performanceRating}");
+        miscUi.text = $"Performance: {performanceRating}";
     }
 }
 

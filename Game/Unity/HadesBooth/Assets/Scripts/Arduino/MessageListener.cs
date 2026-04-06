@@ -18,7 +18,7 @@ using System.Collections;
  */
 public class MessageListener : MonoBehaviour
 {
-    private enum ArduinoType { Lyre }
+    private enum ArduinoType { Lyre, Conductor, FlowerWall }
     [SerializeField] private ArduinoType arduinoType;
     [SerializeField] private GameStatus gameStatus;
 

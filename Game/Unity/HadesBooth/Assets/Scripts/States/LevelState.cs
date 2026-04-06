@@ -18,7 +18,8 @@ public class LevelState : GameNetworkedStateMachine
         SetInitialState(playConductorNotes);
         for (int idx = 0; idx < notes.Length; idx++)
         {
-            conductorNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Level {levelNum} wait for conductor note {idx}");
+            bool clearOnFinal = idx == notes.Length - 1;
+            conductorNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Level {levelNum} wait for conductor note {idx}", clearOnFinal);
             lyreNotes[idx] = new PlayLyreNote(status, notes[idx], $"Level {levelNum} play lyre note {idx}");
 
             if (idx == 0)
@@ -48,6 +49,8 @@ public class LevelState : GameNetworkedStateMachine
         base.Setup();
         status.notesPlayedThisLevel = 0;
         status.successfulNotesPlayedThisLevel = 0;
+        status.SetConductorLedFinalized(false);
+        status.SetConductorLevel();
     }
 
     public override void Cleanup()

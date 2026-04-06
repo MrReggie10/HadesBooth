@@ -16,7 +16,8 @@ public class ConductorTutorial : GameNetworkedStateMachine
         SetInitialState(playNotes);
         for (int idx = 0; idx < notes.Length; idx++)
         {
-            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Wait for conductor note {idx}");
+            bool clearOnFinal = (idx == notes.Length - 1);
+            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Wait for conductor note {idx}", clearOnFinal);
             successes[idx] = new GiveFeedback(status, true, $"Conductor note {idx} success");
             fails[idx] = new GiveFeedback(status, false, $"Conductor note {idx} fail");
 

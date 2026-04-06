@@ -3,18 +3,22 @@ public class WaitForConductorNote : GameState<SuccessTransition>
 {
     protected Note targetNote;
     protected float maxWaitTime;
+    protected bool clearOnFinalExit;
 
-    public WaitForConductorNote(GameStatus status, Note targetNote, float maxWaitTime, string id = null) :
+    public WaitForConductorNote(GameStatus status, Note targetNote, float maxWaitTime, string id = null, bool clearOnFinalExit = false) :
         base(status, id)
     {
         this.targetNote = targetNote;
         this.maxWaitTime = maxWaitTime;
+        this.clearOnFinalExit = clearOnFinalExit;
     }
 
     protected override SuccessTransition Run()
     {
         SuccessTransition baseTrans = base.Run();
         if (baseTrans != null) return baseTrans;
+
+        status.SetConductorLed(status.CurrentConductorNote());
 
         Note? currentNote = status.CurrentConductorNote();
         status.miscUi.text = currentNote.HasValue ? $"Note {currentNote.Value.noteColor}" : "Waiting for note";
@@ -31,5 +35,10 @@ public class WaitForConductorNote : GameState<SuccessTransition>
     {
         base.Cleanup();
         status.notesPlayedThisLevel++;
+        if (clearOnFinalExit)
+        {
+            status.SetConductorLedFinalized(true);
+            status.SetConductorLed(null);
+        }
     }
 }
