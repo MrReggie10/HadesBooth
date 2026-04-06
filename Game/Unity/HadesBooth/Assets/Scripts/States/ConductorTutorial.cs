@@ -17,7 +17,7 @@ public class ConductorTutorial : GameNetworkedStateMachine
         for (int idx = 0; idx < notes.Length; idx++)
         {
             bool clearOnFinal = (idx == notes.Length - 1);
-            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Wait for conductor note {idx}", clearOnFinal);
+            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, clearOnFinal, $"Wait for conductor note {idx}");
             successes[idx] = new GiveFeedback(status, true, $"Conductor note {idx} success");
             fails[idx] = new GiveFeedback(status, false, $"Conductor note {idx} fail");
 

@@ -19,8 +19,7 @@ public class LevelState : GameNetworkedStateMachine
         for (int idx = 0; idx < notes.Length; idx++)
         {
             bool clearOnFinal = idx == notes.Length - 1;
-            conductorNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, $"Level {levelNum} wait for conductor note {idx}", clearOnFinal);
-            lyreNotes[idx] = new PlayLyreNote(status, notes[idx], $"Level {levelNum} play lyre note {idx}");
+            conductorNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, clearOnFinal, $"Level {levelNum} wait for conductor note {idx}");
 
             if (idx == 0)
             {
@@ -28,14 +27,27 @@ public class LevelState : GameNetworkedStateMachine
             }
             else
             {
-                AddTransition(lyreNotes[idx - 1], SuccessTransition.Success, conductorNotes[idx]);
-                AddTransition(lyreNotes[idx - 1], SuccessTransition.Fail, conductorNotes[idx]);
+                AddTransition(conductorNotes[idx - 1], SuccessTransition.Success, conductorNotes[idx]);
+                AddTransition(conductorNotes[idx - 1], SuccessTransition.Fail, conductorNotes[idx]);
             }
-            
-            AddTransition(conductorNotes[idx], SuccessTransition.Success, lyreNotes[idx]);
-            AddTransition(conductorNotes[idx], SuccessTransition.Fail, lyreNotes[idx]);
         }
-        
+
+        for (int idx = 0; idx < notes.Length; idx++)
+        {
+            lyreNotes[idx] = new PlayLyreNote(status, notes[idx], $"Level {levelNum} play lyre note {idx}");
+            
+            if (idx == 0)
+            {
+                AddTransition(conductorNotes[^1], SuccessTransition.Success, lyreNotes[idx]);
+                AddTransition(conductorNotes[^1], SuccessTransition.Fail, lyreNotes[idx]);
+            }
+            else
+            {
+                AddTransition(lyreNotes[idx - 1], SuccessTransition.Success, lyreNotes[idx]);
+                AddTransition(lyreNotes[idx - 1], SuccessTransition.Fail, lyreNotes[idx]);
+            }
+        }
+
         AddTransition(lyreNotes[^1], SuccessTransition.Success, checkSuccess);
         AddTransition(lyreNotes[^1], SuccessTransition.Fail, checkSuccess);
         AddTransition(checkSuccess, SuccessTransition.Success, success);

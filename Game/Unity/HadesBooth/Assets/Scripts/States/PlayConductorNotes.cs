@@ -7,7 +7,7 @@ public class PlayConductorNotes : GameLinearStateMachine
         for (int idx = 0; idx < notes.Length; idx++)
         {
             Note note = notes[idx];
-            AddState(new WaitForTime(status, timePerNote, setup: () => status.SetConductorFlower(note), id: $"Playing note {idx} ({note.noteColor})"));
+            AddState(new WaitForTime(status, timePerNote, setup: () => status.SetConductorFlower(note), id: $"Playing conductor note {idx} ({note.noteColor})"));
         }
     }
 

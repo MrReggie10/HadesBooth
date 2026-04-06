@@ -5,7 +5,7 @@ public class WaitForConductorNote : GameState<SuccessTransition>
     protected float maxWaitTime;
     protected bool clearOnFinalExit;
 
-    public WaitForConductorNote(GameStatus status, Note targetNote, float maxWaitTime, string id = null, bool clearOnFinalExit = false) :
+    public WaitForConductorNote(GameStatus status, Note targetNote, float maxWaitTime, bool clearOnFinalExit = false, string id = null) :
         base(status, id)
     {
         this.targetNote = targetNote;
