@@ -8,6 +8,8 @@ public class PlayLyreNote : GameState<PartialSuccessTransition>
     protected int currentFlowerIdx;
     protected SuccessTransition[] lyreStatuses;
     
+    // Kenechukwu: update PlayLyreNote to take the ammount of time you want it to play (line 33ish I think)
+    // and update everywhere you're calling the notes
     public PlayLyreNote(GameStatus status, Note targetNote, string id = null) : base(status, id)
     {
         this.targetNote = targetNote;

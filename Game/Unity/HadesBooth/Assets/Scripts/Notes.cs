@@ -10,7 +10,6 @@ public enum NoteColor { Red, Blue, Yellow, Cyan }
 public struct Note
 {
     public NoteColor noteColor;
-    // TODO: add rgb values and note pitch
     public Note(NoteColor noteColor)
     {
         this.noteColor = noteColor;
