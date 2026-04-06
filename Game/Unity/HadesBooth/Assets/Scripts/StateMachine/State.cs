@@ -42,6 +42,8 @@ public interface IState<TStatus>
  *      only that the state is done. However, states may convey more information, such as a Success/Failure condition
  *      using SuccessTransition - this will return `Success` when the state "succeeds", and `Fail` when the state
  *      `Fails`. See Transition for how to define transitions
+ *
+ * By: Ben Morris
  */
 public class State<TStatus, TTransition> : IState<TStatus> where TTransition : ITransition
 {

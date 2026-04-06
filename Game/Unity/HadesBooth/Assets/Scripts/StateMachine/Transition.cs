@@ -12,6 +12,8 @@ public interface ITransition
  * Think of it solely as an Enum which can be null.
  *
  * Some general-purpose Transition types are defined below.
+ *
+ * By: Ben Morris
  */
 public class Transition<TTransition> : ITransition where TTransition : Enum
 {
@@ -68,4 +70,18 @@ public class SuccessTransition : Transition<SuccessEnum>
     public static SuccessTransition Fail = new(SuccessEnum.Fail);
     
     public SuccessTransition(SuccessEnum transition) : base(transition) {}
+}
+
+public enum PartialSuccessEnum
+{
+    Success, PartialSuccess, Fail
+}
+
+public class PartialSuccessTransition : Transition<PartialSuccessEnum>
+{
+    public static PartialSuccessTransition Success = new(PartialSuccessEnum.Success);
+    public static PartialSuccessTransition PartialSuccess = new(PartialSuccessEnum.PartialSuccess);
+    public static PartialSuccessTransition Fail = new(PartialSuccessEnum.Fail);
+    
+    public PartialSuccessTransition(PartialSuccessEnum transition) : base(transition) {}
 }

@@ -28,8 +28,9 @@ public class LyreTutorial : GameNetworkedStateMachine
                 AddTransition(fails[idx - 1], waitForNotes[idx]);
             }
             
-            AddTransition(waitForNotes[idx], SuccessTransition.Success, successes[idx]);
-            AddTransition(waitForNotes[idx], SuccessTransition.Fail, fails[idx]);
+            AddTransition(waitForNotes[idx], PartialSuccessTransition.Success, successes[idx]);
+            AddTransition(waitForNotes[idx], PartialSuccessTransition.PartialSuccess, successes[idx]);
+            AddTransition(waitForNotes[idx], PartialSuccessTransition.Fail, fails[idx]);
         }
         
         AddExitTransition(successes[^1]);

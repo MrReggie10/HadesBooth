@@ -10,6 +10,8 @@ using System.Linq;
  *
  * Methods:
  * - AddState: Add a State to be run in parallel
+ *
+ * By: Ben Morris
  */
 public class ParallelState<TStatus> : State<TStatus, DefaultTransition>
 {

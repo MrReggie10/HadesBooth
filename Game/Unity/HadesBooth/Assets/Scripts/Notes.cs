@@ -18,7 +18,35 @@ public struct Note
 
     public Color GetColor()
     {
-        return Color.black;  // TODO note colors
+        switch (noteColor)
+        {
+            case NoteColor.Red:
+                return Color.red;
+            case NoteColor.Blue:
+                return Color.blue;
+            case NoteColor.Yellow:
+                return Color.yellow;
+            case NoteColor.Cyan:
+                return Color.cyan;
+            default:
+                return Color.black;
+        }
+    }
+    public string GetColorString()
+    {
+        switch (noteColor)
+        {
+            case NoteColor.Red:
+                return "r";
+            case NoteColor.Blue:
+                return "b";
+            case NoteColor.Yellow:
+                return "y";
+            case NoteColor.Cyan:
+                return "c";
+            default:
+                return string.Empty;
+        }
     }
 
     // boilerplate so == works
