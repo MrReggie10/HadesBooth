@@ -9,6 +9,8 @@ using UnityEngine;
  *
  * Methods:
  * - AddState: adds a State to the end of this state machine
+ *
+ * By: Ben Morris
  */
 public class LinearStateMachine<TStatus> : State<TStatus, DefaultTransition>
 {

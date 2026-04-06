@@ -12,6 +12,8 @@ public interface ITransition
  * Think of it solely as an Enum which can be null.
  *
  * Some general-purpose Transition types are defined below.
+ *
+ * By: Ben Morris
  */
 public class Transition<TTransition> : ITransition where TTransition : Enum
 {

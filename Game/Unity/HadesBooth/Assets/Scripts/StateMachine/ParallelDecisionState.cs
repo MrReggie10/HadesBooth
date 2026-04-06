@@ -12,7 +12,9 @@ using UnityEngine;
  * Methods:
  * - AddState: Add a state to be run in parallel
  * - SetTransitionState: Set the sub-State which defines the Transition value for this State. MUST be called once before
- *      this State runs. Will call AddState as well, so no need to call both for this sub-State. 
+ *      this State runs. Will call AddState as well, so no need to call both for this sub-State.
+ *
+ * By: Ben Morris
  */
 public class ParallelDecisionState<TStatus, TTransition> : State<TStatus, TTransition> where TTransition : ITransition
 {

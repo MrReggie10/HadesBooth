@@ -13,6 +13,8 @@ using UnityEngine;
  *      machine to move to this next state
  * - AddExitTransition: define a transition that will cause this state machine to finish. Must define both a state and
  *      which transition out of that state will cause the state machine to exit.
+ *
+ * By: Ben Morris
  */
 public class NetworkedStateMachine<TStatus> : State<TStatus, DefaultTransition>
 {
