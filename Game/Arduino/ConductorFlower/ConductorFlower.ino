@@ -11,7 +11,7 @@
 bool stringComplete = false;
 String userInput = "";
 
-int bloom = 1;
+int bloom = 0;
 CRGB indLEDs[2];
 CRGB flowerLEDs[2];
 
@@ -34,7 +34,7 @@ void flowersDown(int stage) {
   digitalWrite(dirPin, HIGH);
 
   // Spin the stepper motor 1 revolution slowly:
-  for (int i = 0; i < stage * stepsPerRevolution; i++) {
+  for (int i = 0; i < stage * stepsPerRevolution / 2; i++) {
     // These four lines result in 1 step:
     digitalWrite(stepPin, HIGH);
     delay(3);
@@ -47,7 +47,7 @@ void flowersUp(int stage) {
   digitalWrite(dirPin, LOW);
 
   // Spin the stepper motor 1 revolution quickly:
-  for (int i = 0; i < stage * stepsPerRevolution; i++) {
+  for (int i = 0; i < stage * stepsPerRevolution / 2; i++) {
     // These four lines result in 1 step:
     digitalWrite(stepPin, HIGH);
     delay(3);
@@ -58,24 +58,10 @@ void flowersUp(int stage) {
 
 void flowerToPosition(int pos) {
   int move = pos - bloom;
-  if(move == 3) {
-    flowersDown(1);
-    flowersDown(1);
-    flowersDown(1);
-  } else if(move == 2) {
-    flowersDown(1);
-    flowersDown(1);
-  } else if(move == 1) {
-    flowersDown(1);
-  } else if(move == -1) {
-    flowersUp(1);
-  } else if(move == -2) {
-    flowersUp(1);
-    flowersUp(1);
-  } else if(move == -3) {
-    flowersUp(1);
-    flowersUp(1);
-    flowersUp(1);
+  if(0 < move && move <= 6) {
+    flowersDown(move);
+  } else if(-6 <= move && move < 0) {
+    flowersUp(-move);
   }
   bloom = pos;
 }
@@ -138,22 +124,34 @@ void loop() {
       FastLED.show();
     // Set flower position
     } else if(userInput.equals("0")) {
-      flowerToPosition(1);
+      flowerToPosition(0);
     } else if(userInput.equals("1")) {
-      flowerToPosition(2);
+      flowerToPosition(1);
     } else if(userInput.equals("2")) {
-      flowerToPosition(3);
+      flowerToPosition(2);
     } else if(userInput.equals("3")) {
+      flowerToPosition(3);
+    } else if(userInput.equals("4")) {
       flowerToPosition(4);
+    } else if(userInput.equals("5")) {
+      flowerToPosition(5);
+    } else if(userInput.equals("6")) {
+      flowerToPosition(6);
     // DEBUG MODE: Set global flower position var
     } else if(userInput.equals("0p")) {
-      setPos(1);
+      setPos(0);
     } else if(userInput.equals("1p")) {
-      setPos(2);
+      setPos(1);
     } else if(userInput.equals("2p")) {
-      setPos(3);
+      setPos(2);
     } else if(userInput.equals("3p")) {
+      setPos(3);
+    } else if(userInput.equals("4p")) {
       setPos(4);
+    } else if(userInput.equals("5p")) {
+      setPos(5);
+    } else if(userInput.equals("6p")) {
+      setPos(6);
     }
     stringComplete = false;
     userInput = "";
