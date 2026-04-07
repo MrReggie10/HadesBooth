@@ -89,30 +89,30 @@ public class GameStatus : MonoBehaviour
     public void SetConductorFlower(Note? note)
     {
         Debug.Log($"Setting conductor flower to {note?.GetColorString()}");
+        if (conductorController != null)
+        {
             if (note == null)
             {
                 conductorController.SendSerialMessage("k1");
                 return;
             }
-        if (conductorController != null)
-        {
             conductorController.SendSerialMessage(note?.GetColorString() + "1");
         }
     }
 
     public void SetConductorLed(Note? note)
     {
-        // always sets LED to black if necessary
-        if (note == null)
-        {
-            conductorController.SendSerialMessage("k2");
-            return;
-        }
-        // if we've finalized the LED, ignore color sends until reset
-        if (conductorLedFinalized) return;
         if (conductorController != null)
         {
-            conductorController.SendSerialMessage(note?.GetColorString() + "2");
+            // always sets LED to black if necessary
+            if (note == null)
+            {
+                conductorController.SendSerialMessage("k2");
+                return;
+            }
+            // if we've finalized the LED, ignore color sends until reset
+            if (conductorLedFinalized) return;
+                conductorController.SendSerialMessage(note?.GetColorString() + "2");
         }
     }
 
@@ -123,10 +123,12 @@ public class GameStatus : MonoBehaviour
 
     public void SetConductorLevel()
     {
-        // TODO: this is untested/broken
-        Debug.Log($"Sending conductor performance rating: {performanceRating}");
-        conductorController.SendSerialMessage($"{performanceRating}");
-        miscUi.text = $"Performance: {performanceRating}";
+        if (conductorController != null)
+        {
+            Debug.Log($"Sending conductor performance rating: {performanceRating}");
+            conductorController.SendSerialMessage($"{performanceRating}");
+            miscUi.text = $"Performance: {performanceRating}";
+        }
     }
 }
 
