@@ -16,6 +16,8 @@ public class ResetAndWait : GameState<DefaultTransition>
         status.score = 0;
         status.levelNum = 0;
         status.notesPlayedThisLevel = 0;
+        status.performanceRating = 1;
+        status.SetConductorLevel();
         // TODO what else needs to reset?
     }
 

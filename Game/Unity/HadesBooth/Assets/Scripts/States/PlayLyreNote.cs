@@ -70,7 +70,7 @@ public class PlayLyreNote : GameState<PartialSuccessTransition>
                 ? SuccessTransition.Success
                 : SuccessTransition.Fail;
         }
-        Debug.Log($"PlayLyreNote target={targetNote} got={lyreNoteStr} flowerIdx={currentFlowerIdx} time={timeSinceStart:F2}");
+        // Debug.Log($"PlayLyreNote target={targetNote} got={lyreNoteStr} flowerIdx={currentFlowerIdx} time={timeSinceStart:F2}");
 
         if (lyreStatuses.Any(s => s == null)) return null;
         return GetTransition();

@@ -18,12 +18,12 @@ public class GiveFeedback : GameState<DefaultTransition>
         if (didGood)
         {
             // TODO play good sound
-            status.performanceRating = Mathf.Clamp(status.performanceRating + 1, 0, 3);
+            status.performanceRating = Mathf.Clamp(status.performanceRating + 1, 0, 6);
         }
         else
         {
             // TODO play bad sound
-            status.performanceRating = Mathf.Clamp(status.performanceRating - 1, 0, 3);
+            status.performanceRating = Mathf.Clamp(status.performanceRating - 1, 0, 6);
         }
     }
 
