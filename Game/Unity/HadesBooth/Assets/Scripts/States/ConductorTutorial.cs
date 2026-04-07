@@ -5,7 +5,7 @@ public class ConductorTutorial : GameNetworkedStateMachine
 {
     public ConductorTutorial(GameStatus status, string id = null) : base(status, id)
     {
-        // TODO set tutorial order, probably make editable in GameStatus
+        // Kenechukwu: also update conductor tutorial if you want to change any timings/charting
         Note[] notes = { Notes.Red, Notes.Blue, Notes.Yellow, Notes.Cyan };
 
         PlayConductorNotes playNotes = new PlayConductorNotes(status, notes, status.conductorTimePerNoteOnFlower, "Play notes for conductor tutorial");

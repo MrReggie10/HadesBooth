@@ -18,7 +18,7 @@ using System.Collections;
  */
 public class MessageListener : MonoBehaviour
 {
-    private enum ArduinoType { Lyre, Conductor, FlowerWall }
+    private enum ArduinoType { Lyre, Guitar, Conductor, FlowerWall }
     [SerializeField] private ArduinoType arduinoType;
     [SerializeField] private GameStatus gameStatus;
 
@@ -26,7 +26,8 @@ public class MessageListener : MonoBehaviour
     public void OnMessageArrived(string msg)
     {
         Debug.Log(arduinoType.ToString() + ": " + msg);
-        if (arduinoType == ArduinoType.Lyre) gameStatus.HandleMessage(msg);
+        if (arduinoType == ArduinoType.Lyre) gameStatus.HandleMessage(msg, 0);
+        else if (arduinoType == ArduinoType.Guitar) gameStatus.HandleMessage(msg, 1);
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'

@@ -8,6 +8,8 @@ public class PlayLyreNote : GameState<PartialSuccessTransition>
     protected int currentFlowerIdx;
     protected SuccessTransition[] lyreStatuses;
     
+    // Kenechukwu: update PlayLyreNote to take the ammount of time you want it to play (line 33ish I think)
+    // and update everywhere you're calling the notes
     public PlayLyreNote(GameStatus status, Note targetNote, string id = null) : base(status, id)
     {
         this.targetNote = targetNote;
@@ -68,7 +70,7 @@ public class PlayLyreNote : GameState<PartialSuccessTransition>
                 ? SuccessTransition.Success
                 : SuccessTransition.Fail;
         }
-        Debug.Log($"PlayLyreNote target={targetNote} got={lyreNoteStr} flowerIdx={currentFlowerIdx} time={timeSinceStart:F2}");
+        // Debug.Log($"PlayLyreNote target={targetNote} got={lyreNoteStr} flowerIdx={currentFlowerIdx} time={timeSinceStart:F2}");
 
         if (lyreStatuses.Any(s => s == null)) return null;
         return GetTransition();

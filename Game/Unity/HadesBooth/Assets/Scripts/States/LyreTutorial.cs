@@ -5,7 +5,7 @@ public class LyreTutorial : GameNetworkedStateMachine
 {
     public LyreTutorial(GameStatus status, string id = null) : base(status, id)
     {
-        // TODO set tutorial order, probably make editable in GameStatus
+        // Kenechukwu: also update lyre tutorial if you want to change any timings/charting
         Note[] notes = { Notes.Red, Notes.Blue, Notes.Yellow, Notes.Cyan };
 
         PlayLyreNote[] waitForNotes = new PlayLyreNote[notes.Length];

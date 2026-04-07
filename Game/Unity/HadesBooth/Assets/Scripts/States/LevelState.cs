@@ -6,6 +6,8 @@ public class LevelState : GameNetworkedStateMachine
     public LevelState(GameStatus status, int levelNum, string id = null) : base(status, id)
     {
         // TODO set level order from levelNum, probably make editable in GameStatus
+        // Kenechukwu: update this array with a different set of notes depending on levelNum
+        // Kenechukwu: update "conductorTimePerNoteOnFlower" / "conductorTimeToPlaynote" to possibly take in arrays if you want more dynamic timing
         Note[] notes = { Notes.Red, Notes.Blue, Notes.Yellow, Notes.Cyan };
 
         PlayConductorNotes playConductorNotes = new PlayConductorNotes(status, notes, status.conductorTimePerNoteOnFlower, $"Level {levelNum} play conductor notes");
