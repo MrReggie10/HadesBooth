@@ -24,7 +24,13 @@ int     bufferIndex  = 0;
 bool    receiving    = false;    // True once we've seen the leading 'L'
 
 // ─── LED Initialization ───────────────────────────────────────────────────────
-CRGB leds[7];
+CRGB leds[1];
+CRGB leds0[2];
+CRGB leds1[2];
+CRGB leds2[2];
+CRGB leds3[2];
+CRGB leds4[2];
+CRGB leds5[2];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -85,7 +91,7 @@ bool parseMessage(unsigned long receiveTime) {
     unsigned long offset = strtoul(offsetTok, nullptr, 10);
     int           addr   = atoi(addrTok);
 
-    if (addr < 0 || addr > 6) return false;
+    if (addr < 0 || addr > 5) return false;
 
     events[i].triggerTime = receiveTime + offset;
     events[i].address     = (uint8_t)addr;
@@ -101,24 +107,47 @@ bool parseMessage(unsigned long receiveTime) {
 
 // ─── Process a fired event ────────────────────────────────────────────────────
 void handleEvent(const Event &e) {
-  // Replace this body with your real logic (e.g. set an LED color).
-  Serial.print(F("[EVENT] time="));
-  Serial.print(e.triggerTime);
-  Serial.print(F("  addr="));
-  Serial.print(e.address);
-  Serial.print(F("  color="));
-  Serial.println(e.color);
   int addr = (int) e.address;
+  // set color
   if(e.color[0] == 'r') {
-    leds[addr] = CRGB(255, 0, 0);
+    leds[0] = CRGB(255, 0, 0);
   } else if(e.color[0] == 'b') {
-    leds[addr] = CRGB(0, 0, 255);
+    leds[0] = CRGB(0, 0, 255);
   } else if(e.color[0] == 'c') {
-    leds[addr] = CRGB(0, 255, 127);
+    leds[0] = CRGB(0, 255, 127);
   } else if(e.color[0] == 'y') {
-    leds[addr] = CRGB(255, 255, 0);
+    leds[0] = CRGB(255, 255, 0);
   } else {
-    leds[addr] = CRGB(0, 255, 0);
+    leds[0] = CRGB(0, 0, 0);
+  }
+  // set color to appropriate led
+  switch(addr) {
+    case 0:
+      leds0[0] = leds[0];
+      leds0[1] = leds[0];
+      break;
+    case 1:
+      leds1[0] = leds[0];
+      leds1[1] = leds[0];
+      break;
+    case 2:
+      leds2[0] = leds[0];
+      leds2[1] = leds[0];
+      break;
+    case 3:
+      leds3[0] = leds[0];
+      leds3[1] = leds[0];
+      break;
+    case 4:
+      leds4[0] = leds[0];
+      leds4[1] = leds[0];
+      break;
+    case 5:
+      leds5[0] = leds[0];
+      leds5[1] = leds[0];
+      break;
+    default: 
+      break;
   }
   FastLED.show();
 }
@@ -126,7 +155,17 @@ void handleEvent(const Event &e) {
 // ─── Arduino Lifecycle ────────────────────────────────────────────────────────
 void setup() {
   pinMode(4, OUTPUT);
-  FastLED.addLeds<WS2812, 4, GRB>(leds, 7);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  FastLED.addLeds<WS2812, 4, GRB>(leds0, 2);
+  FastLED.addLeds<WS2812, 5, GRB>(leds1, 2);
+  FastLED.addLeds<WS2812, 6, GRB>(leds2, 2);
+  FastLED.addLeds<WS2812, 7, GRB>(leds3, 2);
+  FastLED.addLeds<WS2812, 8, GRB>(leds4, 2);
+  FastLED.addLeds<WS2812, 9, GRB>(leds5, 2);
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("Ready. Send: L <count> <ms> <addr> <color> ..."));
 }
