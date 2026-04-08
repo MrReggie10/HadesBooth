@@ -1,12 +1,12 @@
 ﻿
+using System.Linq;
 using UnityEngine;
 
 public class LyreTutorial : GameNetworkedStateMachine
 {
     public LyreTutorial(GameStatus status, string id = null) : base(status, id)
     {
-        // Kenechukwu: also update lyre tutorial if you want to change any timings/charting
-        Note[] notes = { Notes.Red, Notes.Blue, Notes.Yellow, Notes.Cyan };
+        Note[] notes = status.levelTimings[0].lyreNotes.Select(n => n.note).ToArray();
 
         PlayLyreNote[] waitForNotes = new PlayLyreNote[notes.Length];
         GiveFeedback[] successes = new GiveFeedback[notes.Length];
@@ -14,7 +14,7 @@ public class LyreTutorial : GameNetworkedStateMachine
 
         for (int idx = 0; idx < notes.Length; idx++)
         {
-            waitForNotes[idx] = new PlayLyreNote(status, notes[idx], $"Play lyre note {idx}");
+            waitForNotes[idx] = new PlayLyreNote(status, .455f, notes[idx], $"Play lyre note {idx}");
             successes[idx] = new GiveFeedback(status, true, $"Lyre note {idx} success");
             fails[idx] = new GiveFeedback(status, false, $"Lyre note {idx} fail");
 

@@ -1,14 +1,14 @@
 ﻿
+using System.Linq;
 using UnityEngine;
 
 public class ConductorTutorial : GameNetworkedStateMachine
 {
     public ConductorTutorial(GameStatus status, string id = null) : base(status, id)
     {
-        // Kenechukwu: also update conductor tutorial if you want to change any timings/charting
-        Note[] notes = { Notes.Red, Notes.Blue, Notes.Yellow, Notes.Cyan };
+        Note[] notes = status.levelTimings[0].conductorNotes.Select(n => n.note).ToArray();
 
-        PlayConductorNotes playNotes = new PlayConductorNotes(status, notes, status.conductorTimePerNoteOnFlower, "Play notes for conductor tutorial");
+        PlayConductorNotes playNotes = new PlayConductorNotes(status, notes, 200, "Play notes for conductor tutorial");
         WaitForConductorNote[] waitForNotes = new WaitForConductorNote[notes.Length];
         GiveFeedback[] successes = new GiveFeedback[notes.Length];
         GiveFeedback[] fails = new GiveFeedback[notes.Length];
@@ -17,7 +17,7 @@ public class ConductorTutorial : GameNetworkedStateMachine
         for (int idx = 0; idx < notes.Length; idx++)
         {
             bool clearOnFinal = (idx == notes.Length - 1);
-            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], status.conductorTimeToPlayNote, clearOnFinal, $"Wait for conductor note {idx}");
+            waitForNotes[idx] = new WaitForConductorNote(status, notes[idx], 200, clearOnFinal, $"Wait for conductor note {idx}");
             successes[idx] = new GiveFeedback(status, true, $"Conductor note {idx} success");
             fails[idx] = new GiveFeedback(status, false, $"Conductor note {idx} fail");
 

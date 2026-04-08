@@ -18,8 +18,7 @@ public class GameStateManager : MonoBehaviour
         GameNetworkedStateMachine stateMachine = new GameNetworkedStateMachine(gameStatus);
 
         ResetAndWait reset = new ResetAndWait(gameStatus, id:"Reset and wait for next game");
-        ConductorTutorial conductorTutorial = new ConductorTutorial(gameStatus, "Conductor tutorial");
-        LyreTutorial lyreTutorial = new LyreTutorial(gameStatus, "Lyre tutorial");
+        Tutorial tutorial = new Tutorial(gameStatus, "Tutorial");
         LevelState[] levels = new LevelState[gameStatus.numLevels];
         for (int levelNum = 1; levelNum <= gameStatus.numLevels; levelNum++)
         {
@@ -28,9 +27,8 @@ public class GameStateManager : MonoBehaviour
         ShowEnding ending = new ShowEnding(gameStatus);
         
         stateMachine.SetInitialState(reset);
-        stateMachine.AddTransition(reset, conductorTutorial);
-        stateMachine.AddTransition(conductorTutorial, lyreTutorial);
-        stateMachine.AddTransition(lyreTutorial, levels[0]);
+        stateMachine.AddTransition(reset, tutorial);
+        stateMachine.AddTransition(tutorial, levels[0]);
         for (int idx = 1; idx < levels.Length; idx++)
         {
             stateMachine.AddTransition(levels[idx - 1], levels[idx]);

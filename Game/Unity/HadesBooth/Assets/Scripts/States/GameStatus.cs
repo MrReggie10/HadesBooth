@@ -1,7 +1,109 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+
+[Serializable]
+public class NoteTiming
+{
+    public NoteColor noteColor;
+    public int msSinceLevelStart;
+
+    public Note note
+    {
+        get
+        {
+            switch (noteColor)
+            {
+                case NoteColor.Red: return Notes.Red;
+                case NoteColor.Blue: return Notes.Blue;
+                case NoteColor.Yellow: return Notes.Yellow;
+                case NoteColor.Cyan: return Notes.Cyan;
+                default: throw new ArgumentException($"Unknown note color: {noteColor}");
+            }
+        }
+    }
+}
+
+public struct FlowerWallTiming
+{
+    public Note note;
+    public bool turnOn;
+    public int flowerIdx;
+    public int delayMs;
+
+    public FlowerWallTiming(Note note, bool turnOn, int flowerIdx, int delayMs)
+    {
+        this.note = note;
+        this.turnOn = turnOn;
+        this.flowerIdx = flowerIdx;
+        this.delayMs = delayMs;
+    }
+}
+
+[Serializable]
+public class LevelTiming
+{
+    public NoteTiming[] conductorNotes;
+    public NoteTiming[] lyreNotes;
+    public int lyreMsPerFlower;
+    public int measureLengthMs;
+    public int acceptableDifferenceMs;
+
+    public List<FlowerWallTiming> GetFlowerWallTimings(int numFlowers)
+    {
+        List<FlowerWallTiming> timings = new List<FlowerWallTiming>();
+        foreach (NoteTiming note in lyreNotes)
+        {
+            for (int flowerIdx = 0; flowerIdx < numFlowers; flowerIdx++)
+            {
+                FlowerWallTiming onTiming = new FlowerWallTiming(note.note, true, flowerIdx, note.msSinceLevelStart + flowerIdx * lyreMsPerFlower);
+                FlowerWallTiming offTiming = new FlowerWallTiming(note.note, false, flowerIdx, note.msSinceLevelStart + (flowerIdx + 1) * lyreMsPerFlower);
+                timings.Add(onTiming);
+                timings.Add(offTiming);
+            }
+        }
+
+        timings.Sort((a, b) => a.delayMs - b.delayMs);
+        HashSet<FlowerWallTiming> toRemove = new HashSet<FlowerWallTiming>();
+        for (int idx = 0; idx < timings.Count - 1; idx++)
+        {
+            FlowerWallTiming current = timings[idx];
+            List<List<FlowerWallTiming>> within5ms = new List<List<FlowerWallTiming>>();
+            for (int flowerIdx = 0; flowerIdx < numFlowers; flowerIdx++) within5ms.Add(new List<FlowerWallTiming>());
+            within5ms[current.flowerIdx].Add(current);
+            
+            int nextIdx;
+            for (nextIdx = idx + 1;
+                 nextIdx < timings.Count && timings[nextIdx].delayMs - current.delayMs <= 5;
+                 nextIdx++)
+            {
+                within5ms[timings[nextIdx].flowerIdx].Add(timings[nextIdx]);
+            }
+
+            for (int flowerIdx = 0; flowerIdx < numFlowers; flowerIdx++)
+            {
+                List<FlowerWallTiming> sameTime = within5ms[flowerIdx];
+                if (sameTime.Count <= 1) continue;
+                int toKeepIdx = sameTime.FindIndex(t => t.turnOn);
+                if (toKeepIdx == -1) continue;
+                for (int removeIdx = 0; removeIdx < sameTime.Count; removeIdx++)
+                {
+                    if (removeIdx != toKeepIdx) toRemove.Add(sameTime[removeIdx]);
+                }
+            }
+            
+            idx = nextIdx - 1;
+        }
+
+        timings.RemoveAll(toRemove.Contains);
+
+        return timings;
+    }
+}
 
 public class GameStatus : MonoBehaviour
 {
@@ -10,22 +112,21 @@ public class GameStatus : MonoBehaviour
     [HideInInspector] public int performanceRating; // 0-3
     [HideInInspector] public int notesPlayedThisLevel;
     [HideInInspector] public int successfulNotesPlayedThisLevel;
-    
+
     [Header("Levels")]
-    public int numLevels = 3;
+    public LevelTiming[] levelTimings; // level 0 will be tutorial
+    public int numLevels => levelTimings.Length - 1;  // -1 because tutorial
 
     [Header("Conductor")]
     [SerializeField] protected ConductorDetector conductorDetector;
-    public float conductorTimePerNoteOnFlower;
-    public float conductorTimeToPlayNote;
     public SerialController conductorController;
 
     [Header("Lyre")]
-    public float lyreTimePerFlower;
     public int numLyreFlowers;
     public float lyreAcceptWindow;
     protected Note?[] currentLyreNotes = {null, null};
     public int numLyres => currentLyreNotes.Length;
+    public SerialController lyreController;
 
     [Header("Misc")]
     public bool debugMode;
@@ -129,6 +230,18 @@ public class GameStatus : MonoBehaviour
             conductorController.SendSerialMessage($"{performanceRating}");
             miscUi.text = $"Performance: {performanceRating}";
         }
+    }
+
+    public void SendFlowerWallTimings(int levelNum)
+    {
+        List<FlowerWallTiming> timings = levelTimings[levelNum].GetFlowerWallTimings(numLyreFlowers);
+        string message = $"L {timings.Count}";
+        int offset = levelTimings[levelNum].lyreMsPerFlower * numLyreFlowers;
+        foreach (FlowerWallTiming timing in timings)
+        {
+            message += $" {timing.delayMs - offset} {timing.flowerIdx} {timing.note.GetColorString()}";
+        }
+        lyreController?.SendSerialMessage(message);
     }
 }
 

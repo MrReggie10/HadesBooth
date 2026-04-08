@@ -1254,14 +1254,185 @@ MonoBehaviour:
   performanceRating: 0
   notesPlayedThisLevel: 0
   successfulNotesPlayedThisLevel: 0
-  numLevels: 3
+  levelTimings:
+  - conductorNotes:
+    - noteColor: 0
+      msSinceLevelStart: 2727
+    - noteColor: 1
+      msSinceLevelStart: 3409
+    - noteColor: 2
+      msSinceLevelStart: 4091
+    - noteColor: 3
+      msSinceLevelStart: 4773
+    lyreNotes:
+    - noteColor: 0
+      msSinceLevelStart: 5455
+    - noteColor: 1
+      msSinceLevelStart: 6136
+    - noteColor: 2
+      msSinceLevelStart: 6818
+    - noteColor: 3
+      msSinceLevelStart: 7500
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
+  - conductorNotes:
+    - noteColor: 0
+      msSinceLevelStart: 2727
+    - noteColor: 2
+      msSinceLevelStart: 3409
+    - noteColor: 3
+      msSinceLevelStart: 4091
+    - noteColor: 1
+      msSinceLevelStart: 4773
+    lyreNotes:
+    - noteColor: 0
+      msSinceLevelStart: 5455
+    - noteColor: 2
+      msSinceLevelStart: 6136
+    - noteColor: 3
+      msSinceLevelStart: 6818
+    - noteColor: 1
+      msSinceLevelStart: 7273
+    - noteColor: 2
+      msSinceLevelStart: 7727
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
+  - conductorNotes:
+    - noteColor: 3
+      msSinceLevelStart: 2727
+    - noteColor: 2
+      msSinceLevelStart: 3409
+    - noteColor: 0
+      msSinceLevelStart: 4091
+    - noteColor: 1
+      msSinceLevelStart: 4773
+    lyreNotes:
+    - noteColor: 0
+      msSinceLevelStart: 5455
+    - noteColor: 1
+      msSinceLevelStart: 6136
+    - noteColor: 3
+      msSinceLevelStart: 6818
+    - noteColor: 2
+      msSinceLevelStart: 7273
+    - noteColor: 1
+      msSinceLevelStart: 7500
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
+  - conductorNotes:
+    - noteColor: 2
+      msSinceLevelStart: 2727
+    - noteColor: 1
+      msSinceLevelStart: 3409
+    - noteColor: 0
+      msSinceLevelStart: 4091
+    - noteColor: 3
+      msSinceLevelStart: 4545
+    lyreNotes:
+    - noteColor: 3
+      msSinceLevelStart: 5455
+    - noteColor: 2
+      msSinceLevelStart: 5909
+    - noteColor: 1
+      msSinceLevelStart: 6364
+    - noteColor: 0
+      msSinceLevelStart: 7045
+    - noteColor: 2
+      msSinceLevelStart: 7500
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
+  - conductorNotes:
+    - noteColor: 1
+      msSinceLevelStart: 2727
+    - noteColor: 0
+      msSinceLevelStart: 3409
+    - noteColor: 3
+      msSinceLevelStart: 4091
+    - noteColor: 2
+      msSinceLevelStart: 4545
+    lyreNotes:
+    - noteColor: 0
+      msSinceLevelStart: 5455
+    - noteColor: 2
+      msSinceLevelStart: 5909
+    - noteColor: 1
+      msSinceLevelStart: 6364
+    - noteColor: 3
+      msSinceLevelStart: 6818
+    - noteColor: 1
+      msSinceLevelStart: 7045
+    - noteColor: 3
+      msSinceLevelStart: 7500
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
+  - conductorNotes:
+    - noteColor: 1
+      msSinceLevelStart: 2727
+    - noteColor: 0
+      msSinceLevelStart: 3182
+    - noteColor: 1
+      msSinceLevelStart: 4091
+    - noteColor: 3
+      msSinceLevelStart: 4773
+    - noteColor: 2
+      msSinceLevelStart: 5227
+    lyreNotes:
+    - noteColor: 0
+      msSinceLevelStart: 5455
+    - noteColor: 2
+      msSinceLevelStart: 6364
+    - noteColor: 1
+      msSinceLevelStart: 6818
+    - noteColor: 2
+      msSinceLevelStart: 7273
+    - noteColor: 1
+      msSinceLevelStart: 7500
+    - noteColor: 3
+      msSinceLevelStart: 7727
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
+  - conductorNotes:
+    - noteColor: 1
+      msSinceLevelStart: 2727
+    - noteColor: 0
+      msSinceLevelStart: 3182
+    - noteColor: 2
+      msSinceLevelStart: 3636
+    - noteColor: 0
+      msSinceLevelStart: 4091
+    - noteColor: 1
+      msSinceLevelStart: 4545
+    - noteColor: 3
+      msSinceLevelStart: 5227
+    lyreNotes:
+    - noteColor: 3
+      msSinceLevelStart: 5455
+    - noteColor: 1
+      msSinceLevelStart: 5909
+    - noteColor: 2
+      msSinceLevelStart: 6364
+    - noteColor: 0
+      msSinceLevelStart: 6818
+    - noteColor: 2
+      msSinceLevelStart: 7273
+    - noteColor: 1
+      msSinceLevelStart: 7500
+    - noteColor: 3
+      msSinceLevelStart: 7727
+    lyreMsPerFlower: 455
+    measureLengthMs: 2727
+    acceptableDifferenceMs: 100
   conductorDetector: {fileID: 966643791}
-  conductorTimePerNoteOnFlower: 2
-  conductorTimeToPlayNote: 10
   conductorController: {fileID: 0}
-  lyreTimePerFlower: 1
   numLyreFlowers: 6
   lyreAcceptWindow: 0.25
+  lyreController: {fileID: 0}
   debugMode: 0
   gameStateUI: {fileID: 2042862687}
   miscUi: {fileID: 1121030714}

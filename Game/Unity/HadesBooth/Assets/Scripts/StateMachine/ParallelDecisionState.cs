@@ -29,7 +29,7 @@ public class ParallelDecisionState<TStatus, TTransition> : State<TStatus, TTrans
         runningStates = new HashSet<IState<TStatus>>();
     }
 
-    public void AddState(State<TStatus, ITransition> state)
+    public void AddState(IState<TStatus> state)
     {
         states.Add(state);
     }
