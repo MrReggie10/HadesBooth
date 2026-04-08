@@ -27,6 +27,7 @@ public class LevelState : GameNetworkedStateMachine
         status.successfulNotesPlayedThisLevel = 0;
         status.SetConductorLedFinalized(false);
         status.SetConductorLevel();
+        status.SetLevelLights();
     }
 
     public override void Cleanup()

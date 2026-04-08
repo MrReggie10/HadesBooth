@@ -9,7 +9,16 @@ public class ShowEnding : GameState<DefaultTransition>
     public override void Setup()
     {
         base.Setup();
-        // TODO turn on the ending lights and play sound depending on status.DidPlayersWin
+        // TODO play sound
+        Debug.Log("Playing ending lights"); 
+        if (status.DidPlayersWin())
+        {
+            status.dmx.PlayCue(Cue.GoodEnding);
+        }
+        else
+        {
+            status.dmx.PlayCue(Cue.BadEnding);            
+        }
     }
 
     protected override DefaultTransition Run()

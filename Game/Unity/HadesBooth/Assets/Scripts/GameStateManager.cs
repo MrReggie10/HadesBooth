@@ -25,6 +25,7 @@ public class GameStateManager : MonoBehaviour
             levels[levelNum - 1] = new LevelState(gameStatus, levelNum, $"Level {levelNum}");
         }
         ShowEnding ending = new ShowEnding(gameStatus);
+        WaitForTime waitAfterEnding = new WaitForTime(gameStatus, gameStatus.endingTime);
         
         stateMachine.SetInitialState(reset);
         stateMachine.AddTransition(reset, tutorial);
@@ -34,7 +35,8 @@ public class GameStateManager : MonoBehaviour
             stateMachine.AddTransition(levels[idx - 1], levels[idx]);
         }
         stateMachine.AddTransition(levels[^1], ending);
-        stateMachine.AddTransition(ending, reset);
+        stateMachine.AddTransition(ending, waitAfterEnding);
+        stateMachine.AddTransition(waitAfterEnding, reset);
 
         state = stateMachine;
     }

@@ -18,6 +18,7 @@ public class ResetAndWait : GameState<DefaultTransition>
         status.notesPlayedThisLevel = 0;
         status.performanceRating = 1;
         status.SetConductorLevel();
+        status.dmx.PlayCue(Cue.Wait);
         // TODO what else needs to reset?
     }
 
@@ -35,5 +36,6 @@ public class ResetAndWait : GameState<DefaultTransition>
     {
         base.Cleanup();
         // TODO turn off all the ending lights
+        status.dmx.PlayCue(Cue.Blackout);
     }
 }

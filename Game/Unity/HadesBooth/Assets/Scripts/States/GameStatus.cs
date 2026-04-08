@@ -110,7 +110,7 @@ public class GameStatus : MonoBehaviour
 {
     [HideInInspector] public int score;
     [HideInInspector] public int levelNum;
-    [HideInInspector] public int performanceRating; // 0-3
+    [HideInInspector] public int performanceRating; // 0-6
     [HideInInspector] public int notesPlayedThisLevel;
     [HideInInspector] public int successfulNotesPlayedThisLevel;
 
@@ -133,6 +133,8 @@ public class GameStatus : MonoBehaviour
     public bool debugMode;
     public TextMeshProUGUI gameStateUI;
     public TextMeshProUGUI miscUi;
+    public DmxSender dmx;
+    public float endingTime;
 
     // blocks indicator LED change
     protected bool conductorLedFinalized = false;
@@ -231,6 +233,14 @@ public class GameStatus : MonoBehaviour
             conductorController.SendSerialMessage($"{performanceRating}");
             miscUi.text = $"Performance: {performanceRating}";
         }
+    }
+    
+    public void SetLevelLights()
+    {
+        // performance in 0-6, but cues are in 0-3, so divide by 2 and floor
+        int cue = (int) Mathf.Clamp(performanceRating / 2, 0, 3);
+        Cue[] cues = { Cue.Spring0, Cue.Spring1, Cue.Spring2, Cue.Spring3 };
+        dmx.PlayCue(cues[cue]);
     }
 
     public void SendFlowerWallTimings(int levelNum)
