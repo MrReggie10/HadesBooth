@@ -35,6 +35,8 @@ public struct FlowerWallTiming
     public int flowerIdx;
     public int delayMs;
 
+    public string colorString => turnOn ? note.GetColorString() : "k";
+
     public FlowerWallTiming(Note note, bool turnOn, int flowerIdx, int delayMs)
     {
         this.note = note;
@@ -247,10 +249,9 @@ public class GameStatus : MonoBehaviour
     {
         List<FlowerWallTiming> timings = levelTimings[levelNum].GetFlowerWallTimings(numLyreFlowers);
         string message = $"L {timings.Count}";
-        int offset = levelTimings[levelNum].lyreMsPerFlower * numLyreFlowers;
         foreach (FlowerWallTiming timing in timings)
         {
-            message += $" {timing.delayMs - offset} {timing.flowerIdx} {timing.note.GetColorString()}";
+            message += $" {timing.delayMs} {timing.flowerIdx} {timing.colorString}";
         }
         lyreController?.SendSerialMessage(message);
     }
