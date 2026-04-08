@@ -60,8 +60,9 @@ public class LevelTiming
         {
             for (int flowerIdx = 0; flowerIdx < numFlowers; flowerIdx++)
             {
-                FlowerWallTiming onTiming = new FlowerWallTiming(note.note, true, flowerIdx, note.msSinceLevelStart + flowerIdx * lyreMsPerFlower);
-                FlowerWallTiming offTiming = new FlowerWallTiming(note.note, false, flowerIdx, note.msSinceLevelStart + (flowerIdx + 1) * lyreMsPerFlower);
+                int timeOn = note.msSinceLevelStart - lyreMsPerFlower * (numFlowers - 1 - flowerIdx) - lyreMsPerFlower / 2;
+                FlowerWallTiming onTiming = new FlowerWallTiming(note.note, true, flowerIdx, timeOn);
+                FlowerWallTiming offTiming = new FlowerWallTiming(note.note, false, flowerIdx, timeOn + lyreMsPerFlower);
                 timings.Add(onTiming);
                 timings.Add(offTiming);
             }
