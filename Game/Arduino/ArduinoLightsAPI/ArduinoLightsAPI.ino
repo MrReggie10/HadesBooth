@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <FastLED.h>
+#include <string.h>
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 #define MAX_EVENTS    64     // Maximum number of tuples we can store
@@ -152,8 +153,84 @@ void handleEvent(const Event &e) {
   FastLED.show();
 }
 
+// ─── Stepper / Flower position helpers (from ConductorFlower) ───────────────
+#define dirPin 2
+#define stepPin 3
+#define stepsPerRevolution 200
+
+int bloom = 0;
+
+void flowersDown(int stage) {
+  digitalWrite(dirPin, HIGH);
+  for (int i = 0; i < stage * stepsPerRevolution / 2; i++) {
+    digitalWrite(stepPin, HIGH);
+    delay(3);
+    digitalWrite(stepPin, LOW);
+    delay(3);
+  }
+}
+
+void flowersUp(int stage) {
+  digitalWrite(dirPin, LOW);
+  for (int i = 0; i < stage * stepsPerRevolution / 2; i++) {
+    digitalWrite(stepPin, HIGH);
+    delay(3);
+    digitalWrite(stepPin, LOW);
+    delay(3);
+  }
+}
+
+void flowerToPosition(int pos) {
+  int move = pos - bloom;
+  if (0 < move && move <= 6) {
+    flowersDown(move);
+  } else if (-6 <= move && move < 0) {
+    flowersUp(-move);
+  }
+  bloom = pos;
+}
+
+void setPos(int pos) {
+  bloom = pos;
+}
+
+String userInput = "";
+bool   stringComplete = false;
+
+// Process a single command string (null-terminated)
+void processCommand(const char *s) {
+  // trim simple whitespace from both ends
+  const char *start = s;
+  while (*start == ' ' || *start == '\t' || *start == '\r' || *start == '\n') start++;
+  int len = strlen(start);
+  while (len > 0 && (start[len-1] == ' ' || start[len-1] == '\t' || start[len-1] == '\r' || start[len-1] == '\n')) len--;
+  if (len <= 0) return;
+
+  // single-char commands
+  if (len == 1) {
+    char c = start[0];
+    if (c == 'd') {
+      flowersDown(1);
+    } else if (c == 'u') {
+      flowersUp(1);
+    } else if (c >= '0' && c <= '6') {
+      flowerToPosition(c - '0');
+    }
+    return;
+  }
+
+  // two-char "#p" commands to set position without moving
+  if (len == 2 && start[1] == 'p' && start[0] >= '0' && start[0] <= '6') {
+    setPos(start[0] - '0');
+    return;
+  }
+}
+
 // ─── Arduino Lifecycle ────────────────────────────────────────────────────────
 void setup() {
+  // initialize stepper pins
+  pinMode(dirPin, OUTPUT);
+  pinMode(stepPin, OUTPUT);
   pinMode(4, OUTPUT);
   pinMode(5, OUTPUT);
   pinMode(6, OUTPUT);
@@ -167,48 +244,48 @@ void setup() {
   FastLED.addLeds<WS2812, 8, GRB>(leds4, 2);
   FastLED.addLeds<WS2812, 9, GRB>(leds5, 2);
   Serial.begin(SERIAL_BAUD);
-  Serial.println(F("Ready. Send: L <count> <ms> <addr> <color> ..."));
+  userInput.reserve(128);
+  Serial.println(F("Ready. Send: L <count> <ms> <addr> <color> ... or commands: d,u,0-6,0p-6p"));
 }
 
 void loop() {
   // ── 1. Read serial input character by character ──────────────────────────
   while (Serial.available()) {
     char c = (char)Serial.read();
-
-    // 'L' at the start of a fresh line begins a new message
-    if (!receiving && c == 'L') {
-      receiving   = true;
-      bufferIndex = 0;
-      inputBuffer[bufferIndex++] = c;
-      continue;
+    userInput += c;
+    if (c == '\n') {
+      stringComplete = true;
     }
+  }
 
-    if (receiving) {
-      if (c == '\n' || c == '\r') {
-        // End of message – terminate string and parse
-        inputBuffer[bufferIndex] = '\0';
-        unsigned long receiveTime = millis();
+  if (stringComplete) {
+    // remove trailing CR/LF
+    userInput.trim();
 
-        if (parseMessage(receiveTime)) {
-          Serial.print(F("Loaded "));
-          Serial.print(eventCount);
-          Serial.println(F(" event(s)."));
-        } else {
-          Serial.println(F("Parse error."));
-        }
-
-        receiving   = false;
-        bufferIndex = 0;
-
-      } else if (bufferIndex < INPUT_BUFFER_SIZE - 1) {
-        inputBuffer[bufferIndex++] = c;
+    if (userInput.length() > 0 && userInput.charAt(0) == 'L') {
+      // copy into c-string inputBuffer for existing parser
+      int copyLen = min((int)userInput.length(), INPUT_BUFFER_SIZE - 1);
+      for (int i = 0; i < copyLen; ++i) inputBuffer[i] = userInput.charAt(i);
+      inputBuffer[copyLen] = '\0';
+      unsigned long receiveTime = millis();
+      if (parseMessage(receiveTime)) {
+        Serial.print(F("Loaded "));
+        Serial.print(eventCount);
+        Serial.println(F(" event(s)."));
       } else {
-        // Buffer overflow – discard message
-        Serial.println(F("Buffer overflow."));
-        receiving   = false;
-        bufferIndex = 0;
+        Serial.println(F("Parse error."));
       }
+      // clear receiving state in case it was set elsewhere
+      receiving = false;
+      bufferIndex = 0;
+    } else {
+  // delegate to command processor
+  processCommand(userInput.c_str());
     }
+
+    // clear for next line
+    userInput = "";
+    stringComplete = false;
   }
 
   // ── 2. Fire any events whose time has come ───────────────────────────────
