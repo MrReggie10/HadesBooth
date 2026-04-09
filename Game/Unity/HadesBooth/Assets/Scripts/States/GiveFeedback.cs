@@ -15,16 +15,9 @@ public class GiveFeedback : GameState<DefaultTransition>
     public override void Setup()
     {
         base.Setup();
-        if (didGood)
-        {
-            // TODO play good sound
-            status.performanceRating = Mathf.Clamp(status.performanceRating + 1, 0, 6);
-        }
-        else
-        {
-            // TODO play bad sound
-            status.performanceRating = Mathf.Clamp(status.performanceRating - 1, 0, 6);
-        }
+        int toAdd = didGood ? 1 : -1;
+        status.performanceRating = Mathf.Clamp(status.performanceRating + toAdd, 0, 6);
+        status.PlayLevelEndSfx(didGood);
     }
 
     protected override DefaultTransition Run()

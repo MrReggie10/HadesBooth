@@ -2048,6 +2048,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MessageListener
   arduinoType: 1
   gameStatus: {fileID: 2070746971}
+--- !u!114 &1790099645 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
+  m_PrefabInstance: {fileID: 1790099641}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790099643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1820957930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2665,13 +2676,15 @@ MonoBehaviour:
     acceptableDifferenceMs: 100
     minNotesToSucceed: 5
   minScoreToWin: 27
+  levelWinSfx: {fileID: 8300000, guid: 9d4ea684ab3f9274e855ffc1aa5064d1, type: 3}
+  levelLoseSfx: {fileID: 0}
   conductorDetector: {fileID: 966643791}
-  conductorController: {fileID: 0}
-  conductorSuccessSfx: {fileID: 0}
+  conductorController: {fileID: 1790099645}
+  conductorSuccessSfx: {fileID: 8300000, guid: fd760a825e1f724429285aa9d66dffd0, type: 3}
   conductorFailSfx: {fileID: 0}
   numLyreFlowers: 6
   lyreController: {fileID: 1820957934}
-  lyreSuccessSfx: {fileID: 0}
+  lyreSuccessSfx: {fileID: 8300000, guid: 98062342afa5f3c4aa76823c8ad65f60, type: 3}
   lyreFailSfx: {fileID: 0}
   bgmSources:
   - {fileID: 119054959}

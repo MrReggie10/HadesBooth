@@ -122,6 +122,8 @@ public class GameStatus : MonoBehaviour
     public int numLevels => levelTimings.Length;
     protected bool?[] didSucceedLevel;
     public int minScoreToWin;
+    public AudioClip levelWinSfx;
+    public AudioClip levelLoseSfx;
 
     [Header("Conductor")]
     [SerializeField] protected ConductorDetector conductorDetector;
@@ -317,13 +319,22 @@ public class GameStatus : MonoBehaviour
 
     public void PlayLyreSfx(bool success)
     {
-        AudioClip sfx = success ? lyreSuccessSfx : lyreFailSfx;
-        if (sfx) sfxSource.PlayOneShot(sfx);
+        PlaySfx(success, lyreSuccessSfx, lyreFailSfx);
     }
 
     public void PlayConductorSfx(bool success)
     {
-        AudioClip sfx = success ? conductorSuccessSfx : conductorFailSfx;
+        PlaySfx(success, conductorSuccessSfx, conductorFailSfx);
+    }
+
+    public void PlayLevelEndSfx(bool success)
+    {
+        PlaySfx(success, levelWinSfx, levelLoseSfx);
+    }
+
+    protected void PlaySfx(bool success, AudioClip onSuccess, AudioClip onFail)
+    {
+        AudioClip sfx = success ? onSuccess : onFail;
         if (sfx) sfxSource.PlayOneShot(sfx);
     }
 }
