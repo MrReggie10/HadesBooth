@@ -20,7 +20,9 @@ public class ReadConductorNotes : ReadNotes
 
     protected override Note? GetCurrentNote(int _)
     {
-        return status.CurrentConductorNote();
+        return status.useConductor
+            ? status.CurrentConductorNote()
+            : (status.CurrentLyreNote(0) ?? status.CurrentLyreNote(1));
     }
 
     protected void OnNoteTransition(int numSuccess)

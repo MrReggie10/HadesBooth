@@ -153,6 +153,7 @@ public class GameStatus : MonoBehaviour
     public DmxSender dmx;
     public float endingTime;
     public AudioSource sfxSource;
+    public bool useConductor;
 
     public void Awake()
     {
