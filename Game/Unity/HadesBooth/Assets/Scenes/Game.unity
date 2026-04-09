@@ -219,6 +219,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MessageListener
   arduinoType: 1
   gameStatus: {fileID: 2070746971}
+--- !u!114 &14125431 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
+  m_PrefabInstance: {fileID: 14125427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14125429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &25191741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2704,7 +2715,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f6eefd2bce4af4447980db1d032635b0, type: 3}
   - {fileID: 8300000, guid: 7ac10793e08ad7d4b83875531db6ee23, type: 3}
   - {fileID: 8300000, guid: e101cd7131099c749a93e4e0c3791db4, type: 3}
-  flowerWall: {fileID: 0}
+  flowerWall: {fileID: 14125431}
   debugMode: 0
   gameStateUI: {fileID: 2042862687}
   miscUi: {fileID: 1121030714}
