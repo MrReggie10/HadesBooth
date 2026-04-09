@@ -154,11 +154,20 @@ public class GameStatus : MonoBehaviour
     public float endingTime;
     public AudioSource sfxSource;
     public bool useConductor;
+    public bool backgroundConductorLed;
 
     public void Awake()
     {
         didSucceedLevel = new bool?[levelTimings.Length];
         Reset();
+    }
+
+    public void Update()
+    {
+        if (backgroundConductorLed)
+        {
+            SetConductorLed(CurrentConductorNote());
+        }
     }
 
     public void Reset()
