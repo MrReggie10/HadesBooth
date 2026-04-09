@@ -1,0 +1,13 @@
+Measure Size: 6
+Beats Per Minute: 132
+Measures Per Level: 4
+# Measure, beat, color
+
+# Lyre Tutorial
+3, 1.0, r
+3, 4.0, b
+
+# 3, 1.0, r
+# 3, 2.5, b
+# 3, 4.0, y
+# 3, 5.5, c

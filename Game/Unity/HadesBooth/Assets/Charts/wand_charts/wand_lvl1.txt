@@ -1,0 +1,10 @@
+Measure Size: 6
+Beats Per Minute: 132
+Measures Per Level: 4
+# Measure, beat, color
+
+# Wand Level 1
+2, 1.0, r
+2, 2.5, y
+2, 4.0, c
+2, 5.5, b
