@@ -144,6 +144,7 @@ public class GameStatus : MonoBehaviour
     [Header("BGM")]
     public AudioSource[] bgmSources; // must be exactly 8 elements
     public AudioClip[] bgms; // must be exactly 8 elements
+    public SerialController flowerWall;
 
     [Header("Misc")]
     public bool debugMode;
@@ -255,7 +256,7 @@ public class GameStatus : MonoBehaviour
 
     public void SetConductorFlower(Note? note)
     {
-        Debug.Log($"Setting conductor flower to {note?.GetColorString()}");
+        // Debug.Log($"Setting conductor flower to {note?.GetColorString()}");
         if (conductorController != null)
         {
             if (note == null)
@@ -296,6 +297,12 @@ public class GameStatus : MonoBehaviour
             conductorController.SendSerialMessage($"{performanceRating}");
             miscUi.text = $"Performance: {performanceRating}";
         }
+        if (flowerWall != null)
+        {
+            Debug.Log($"Sending conductor performance rating: {performanceRating}");
+            flowerWall.SendSerialMessage($"{performanceRating}");
+            miscUi.text = $"Performance: {performanceRating}";
+        }
     }
     
     public void SetLevelLights()
@@ -314,7 +321,7 @@ public class GameStatus : MonoBehaviour
         {
             message += $" {timing.delayMs} {timing.flowerIdx} {timing.colorString}";
         }
-        lyreController?.SendSerialMessage(message);
+        flowerWall?.SendSerialMessage(message);
     }
 
     public void PlayLyreSfx(bool success)
