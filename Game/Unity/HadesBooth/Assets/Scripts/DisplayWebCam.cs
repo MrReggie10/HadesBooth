@@ -23,6 +23,8 @@ public class DisplayWebCam : MonoBehaviour
     protected Mat cachedRgbaImg;
     protected Mat cachedRgbImg;
     
+    public RawImage rawImage { get; protected set; }
+    
     IEnumerator Start()
     {
         IsReady = false;
@@ -32,8 +34,8 @@ public class DisplayWebCam : MonoBehaviour
         Debug.Log($"Using camera {camName}");
         webcamTex = new WebCamTexture(camName, cameraWidth, cameraHeight);
 
-        RawImage img = GetComponent<RawImage>();
-        img.texture = webcamTex;
+        RawImage rawImage = GetComponent<RawImage>();
+        rawImage.texture = webcamTex;
         
         webcamTex.Play();
 

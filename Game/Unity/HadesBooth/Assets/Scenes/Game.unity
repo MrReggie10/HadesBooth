@@ -1286,9 +1286,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ConductorDetector
   hsvLowerBounds: {x: 0, y: 0, z: 230}
   hsvUpperBounds: {x: 180, y: 20, z: 255}
+  minCircularity: 0
+  maxCircularity: 1
+  minInertia: 0
+  maxInertia: 1
+  minArea: 50
+  maxArea: 1000
   webcam: {fileID: 359415885}
   canvas: {fileID: 2050350204}
   dot: {fileID: 1984580085}
+  maskedImage: {fileID: 0}
+  maskDot: {fileID: 0}
 --- !u!4 &966643792
 Transform:
   m_ObjectHideFlags: 0
