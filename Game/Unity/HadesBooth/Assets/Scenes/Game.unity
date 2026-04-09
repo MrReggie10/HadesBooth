@@ -2664,7 +2664,7 @@ MonoBehaviour:
     measureLengthMs: 2727
     acceptableDifferenceMs: 100
     minNotesToSucceed: 5
-  minScoreToWin: 20
+  minScoreToWin: 27
   conductorDetector: {fileID: 966643791}
   conductorController: {fileID: 0}
   conductorSuccessSfx: {fileID: 0}
