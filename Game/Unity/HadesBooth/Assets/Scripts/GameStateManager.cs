@@ -18,18 +18,16 @@ public class GameStateManager : MonoBehaviour
         GameNetworkedStateMachine stateMachine = new GameNetworkedStateMachine(gameStatus);
 
         ResetAndWait reset = new ResetAndWait(gameStatus, id:"Reset and wait for next game");
-        Tutorial tutorial = new Tutorial(gameStatus, "Tutorial");
         LevelState[] levels = new LevelState[gameStatus.numLevels];
-        for (int levelNum = 1; levelNum <= gameStatus.numLevels; levelNum++)
+        for (int levelNum = 0; levelNum <= gameStatus.numLevels; levelNum++)
         {
-            levels[levelNum - 1] = new LevelState(gameStatus, levelNum, $"Level {levelNum}");
+            levels[levelNum] = new LevelState(gameStatus, levelNum, $"Level {levelNum}");
         }
         ShowEnding ending = new ShowEnding(gameStatus);
         WaitForTime waitAfterEnding = new WaitForTime(gameStatus, gameStatus.endingTime);
         
         stateMachine.SetInitialState(reset);
-        stateMachine.AddTransition(reset, tutorial);
-        stateMachine.AddTransition(tutorial, levels[0]);
+        stateMachine.AddTransition(reset, levels[0]);
         for (int idx = 1; idx < levels.Length; idx++)
         {
             stateMachine.AddTransition(levels[idx - 1], levels[idx]);

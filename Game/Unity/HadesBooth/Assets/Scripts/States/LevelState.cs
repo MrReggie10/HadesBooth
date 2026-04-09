@@ -1,9 +1,11 @@
 ﻿
 public class LevelState : GameNetworkedStateMachine
 {
+    protected int levelNum;
     
     public LevelState(GameStatus status, int levelNum, string id = null) : base(status, id)
     {
+        this.levelNum = levelNum;
         GameParallelState playAndReadNotes = new GameParallelState(status, $"Level {levelNum} play and read notes");
         playAndReadNotes.AddState(new PlayNotes(status, levelNum, $"Level {levelNum} play conductor notes"));
         playAndReadNotes.AddState(new ReadConductorNotes(status, levelNum, id: $"Level {levelNum} read conductor notes"));
@@ -23,16 +25,12 @@ public class LevelState : GameNetworkedStateMachine
     public override void Setup()
     {
         base.Setup();
-        status.notesPlayedThisLevel = 0;
-        status.successfulNotesPlayedThisLevel = 0;
-        status.SetConductorLedFinalized(false);
-        status.SetConductorLevel();
-        status.SetLevelLights();
+        status.OnLevelStart(levelNum);
     }
 
     public override void Cleanup()
     {
         base.Cleanup();
-        status.score += status.successfulNotesPlayedThisLevel;
+        status.OnLevelEnd();
     }
 }
