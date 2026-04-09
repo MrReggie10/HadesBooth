@@ -20,8 +20,11 @@ public class ResetAndWait : GameState<DefaultTransition>
     {
         DefaultTransition baseTrans = base.Run();
         if (baseTrans != null) return baseTrans;
-        
-        if ((key.HasValue && Input.GetKeyDown(key.Value)) || (!key.HasValue && Input.anyKeyDown))return DefaultTransition.Default;
+
+        Note? lyre1Note = status.CurrentLyreNote(0);
+        Note? lyre2Note = status.CurrentLyreNote(1);
+        bool lyreStrum = (lyre1Note?.Equals(Notes.Red) ?? false) && (lyre2Note?.Equals(Notes.Red) ?? false);
+        if (lyreStrum || (key.HasValue && Input.GetKeyDown(key.Value)) || (!key.HasValue && Input.anyKeyDown)) return DefaultTransition.Default;
 
         return null;
     }
