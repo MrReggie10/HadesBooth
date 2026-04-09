@@ -54,6 +54,7 @@ public class LevelTiming
     public int lyreMsPerFlower;
     public int measureLengthMs;
     public int acceptableDifferenceMs;
+    public int minNotesToSucceed;
 
     public List<FlowerWallTiming> GetFlowerWallTimings(int numFlowers)
     {
@@ -117,19 +118,30 @@ public class GameStatus : MonoBehaviour
     [HideInInspector] public int successfulNotesPlayedThisLevel;
 
     [Header("Levels")]
-    public LevelTiming[] levelTimings; // level 0 will be tutorial
-    public int numLevels => levelTimings.Length - 1;  // -1 because tutorial
+    public LevelTiming[] levelTimings;
+    public int numLevels => levelTimings.Length;
+    protected bool?[] didSucceedLevel;
+    public int minScoreToWin;
 
     [Header("Conductor")]
     [SerializeField] protected ConductorDetector conductorDetector;
     public SerialController conductorController;
+    public AudioClip conductorSuccessSfx;
+    public AudioClip conductorFailSfx;
+    // blocks indicator LED change
+    protected bool conductorLedFinalized = false;
 
     [Header("Lyre")]
     public int numLyreFlowers;
-    public float lyreAcceptWindow;
     protected Note?[] currentLyreNotes = {null, null};
     public int numLyres => currentLyreNotes.Length;
     public SerialController lyreController;
+    public AudioClip lyreSuccessSfx;
+    public AudioClip lyreFailSfx;
+    
+    [Header("BGM")]
+    public AudioSource[] bgmSources; // must be exactly 8 elements
+    public AudioClip[] bgms; // must be exactly 8 elements
 
     [Header("Misc")]
     public bool debugMode;
@@ -137,13 +149,47 @@ public class GameStatus : MonoBehaviour
     public TextMeshProUGUI miscUi;
     public DmxSender dmx;
     public float endingTime;
+    public AudioSource sfxSource;
 
-    // blocks indicator LED change
-    protected bool conductorLedFinalized = false;
+    public void Awake()
+    {
+        didSucceedLevel = new bool?[levelTimings.Length];
+        Reset();
+    }
+
+    public void Reset()
+    {
+        for (int idx = 0; idx <= numLevels; idx++)
+        {
+            didSucceedLevel[idx] = null;
+        }
+        score = 0;
+        levelNum = 0;
+        notesPlayedThisLevel = 0;
+        successfulNotesPlayedThisLevel = 0;
+        performanceRating = 1;
+        SetConductorLevel();
+        dmx.PlayCue(Cue.Wait);
+    }
+
+    public void OnLevelStart(int level)
+    {
+        for (int idx = 0; idx < 8; idx++)
+        {
+            bgmSources[idx].PlayOneShot(bgms[idx]);
+            bgmSources[idx].volume = idx == 0 ? 1f : 0f;
+        }
+        notesPlayedThisLevel = 0;
+        successfulNotesPlayedThisLevel = 0;
+        levelNum = level;
+        SetConductorLedFinalized(false);
+        SetConductorLevel();
+        SetLevelLights();
+    }
 
     public Note? CurrentConductorNote()
     {
-    return conductorDetector.currentNote;
+        return conductorDetector.currentNote;
     }
 
     public Note? CurrentLyreNote(int lyreIdx = 0)
@@ -180,16 +226,29 @@ public class GameStatus : MonoBehaviour
         currentLyreNotes[lyreIdx] = null;
     }
 
+    public void OnLevelEnd()
+    {
+        score += successfulNotesPlayedThisLevel;
+        didSucceedLevel[levelNum] = successfulNotesPlayedThisLevel >= levelTimings[levelNum].minNotesToSucceed;
+
+        int activeIdx = 0;
+        if (didSucceedLevel[3] ?? false) activeIdx += 4;
+        if (didSucceedLevel[5] ?? false) activeIdx += 2;
+        if (levelNum >= numLevels && DidPlayersWin()) activeIdx += 1;
+        for (int idx = 0; idx < 8; idx++)
+        {
+            bgmSources[idx].volume = idx == activeIdx ? 1f : 0f;
+        }
+    }
+
     public bool WasLevelSuccessful()
     {
-        // TODO WasLevelSuccessful - did the players succeed on the current level?
-        return false;
+        return successfulNotesPlayedThisLevel >= levelTimings[levelNum].minNotesToSucceed;
     }
 
     public bool DidPlayersWin()
     {
-        // TODO DidPlayersWin - did the players get the good ending?
-        return false;
+        return score >= minScoreToWin;
     }
 
     public void SetConductorFlower(Note? note)
@@ -254,6 +313,18 @@ public class GameStatus : MonoBehaviour
             message += $" {timing.delayMs} {timing.flowerIdx} {timing.colorString}";
         }
         lyreController?.SendSerialMessage(message);
+    }
+
+    public void PlayLyreSfx(bool success)
+    {
+        AudioClip sfx = success ? lyreSuccessSfx : lyreFailSfx;
+        if (sfx) sfxSource.PlayOneShot(sfx);
+    }
+
+    public void PlayConductorSfx(bool success)
+    {
+        AudioClip sfx = success ? conductorSuccessSfx : conductorFailSfx;
+        if (sfx) sfxSource.PlayOneShot(sfx);
     }
 }
 

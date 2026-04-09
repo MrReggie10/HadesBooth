@@ -13,13 +13,7 @@ public class ResetAndWait : GameState<DefaultTransition>
     public override void Setup()
     {
         base.Setup();
-        status.score = 0;
-        status.levelNum = 0;
-        status.notesPlayedThisLevel = 0;
-        status.performanceRating = 1;
-        status.SetConductorLevel();
-        status.dmx.PlayCue(Cue.Wait);
-        // TODO what else needs to reset?
+        status.Reset();
     }
 
     protected override DefaultTransition Run()

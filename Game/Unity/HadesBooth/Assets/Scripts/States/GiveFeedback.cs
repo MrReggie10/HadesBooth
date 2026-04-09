@@ -39,9 +39,4 @@ public class GiveFeedback : GameState<DefaultTransition>
         }
         return null;
     }
-
-    public override void Cleanup()
-    {
-        base.Cleanup();
-    }
 }
