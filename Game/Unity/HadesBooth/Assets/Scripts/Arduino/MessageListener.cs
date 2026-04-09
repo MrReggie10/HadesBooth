@@ -21,13 +21,24 @@ public class MessageListener : MonoBehaviour
     private enum ArduinoType { Lyre, Guitar, Conductor, FlowerWall }
     [SerializeField] private ArduinoType arduinoType;
     [SerializeField] private GameStatus gameStatus;
+    [SerializeField] private ArduinoTesting arduinoTester;
+    
 
     // Invoked when a line of data is received from the serial device.
     public void OnMessageArrived(string msg)
     {
         Debug.Log(arduinoType.ToString() + ": " + msg);
-        if (arduinoType == ArduinoType.Lyre) gameStatus.HandleMessage(msg, 0);
-        else if (arduinoType == ArduinoType.Guitar) gameStatus.HandleMessage(msg, 1);
+        if (gameStatus != null)
+        {
+            if (arduinoType == ArduinoType.Lyre) gameStatus.HandleMessage(msg, 0);
+            else if (arduinoType == ArduinoType.Guitar) gameStatus.HandleMessage(msg, 1);
+        }
+        
+        else // B mode
+        {
+            if (arduinoType == ArduinoType.Lyre) arduinoTester.HandleMessage(msg, 0);
+            else if (arduinoType == ArduinoType.Guitar) arduinoTester.HandleMessage(msg, 1);
+        }
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
