@@ -18,7 +18,7 @@ public class ReadLyreNotes : ReadNotes
 
     protected override Note? GetCurrentNote(int playerIdx)
     {
-        return status.CurrentLyreNote(playerIdx);
+        return status.CurrentLyreNote(status.useConductor ? playerIdx : 0);
     }
 
     protected void OnNoteTransition(int numSuccess)

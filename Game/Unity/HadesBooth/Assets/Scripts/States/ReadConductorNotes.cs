@@ -22,7 +22,7 @@ public class ReadConductorNotes : ReadNotes
     {
         return status.useConductor
             ? status.CurrentConductorNote()
-            : (status.CurrentLyreNote(0) ?? status.CurrentLyreNote(1));
+            : status.CurrentLyreNote(1);
     }
 
     protected void OnNoteTransition(int numSuccess)
