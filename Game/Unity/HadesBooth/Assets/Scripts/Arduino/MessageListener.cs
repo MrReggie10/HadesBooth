@@ -28,6 +28,7 @@ public class MessageListener : MonoBehaviour
         Debug.Log(arduinoType.ToString() + ": " + msg);
         if (arduinoType == ArduinoType.Lyre) gameStatus.HandleMessage(msg, 0);
         else if (arduinoType == ArduinoType.Guitar) gameStatus.HandleMessage(msg, 1);
+        else Debug.LogError($"weird message {msg} arrived");
     }
 
     // Invoked when a connect/disconnect event occurs. The parameter 'success'

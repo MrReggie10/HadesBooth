@@ -147,7 +147,6 @@ public class GameStatus : MonoBehaviour
     public SerialController flowerWall;
 
     [Header("Misc")]
-    public bool debugMode;
     public TextMeshProUGUI gameStateUI;
     public TextMeshProUGUI miscUi;
     public DmxSender dmx;
@@ -172,8 +171,6 @@ public class GameStatus : MonoBehaviour
 
     public void Reset()
     {
-        /* Kenechukwu debugging */
-        //for (int idx = 0; idx <= numLevels; idx++)
         for (int idx = 0; idx < numLevels; idx++)
         {
             didSucceedLevel[idx] = null;
@@ -341,6 +338,7 @@ public class GameStatus : MonoBehaviour
         {
             message += $" {timing.delayMs} {timing.flowerIdx} {timing.colorString}";
         }
+        Debug.Log("message: {message}");
         flowerWall?.SendSerialMessage(message);
     }
 
