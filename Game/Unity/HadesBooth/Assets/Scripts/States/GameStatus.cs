@@ -172,7 +172,9 @@ public class GameStatus : MonoBehaviour
 
     public void Reset()
     {
-        for (int idx = 0; idx <= numLevels; idx++)
+        /* Kenechukwu debugging */
+        //for (int idx = 0; idx <= numLevels; idx++)
+        for (int idx = 0; idx < numLevels; idx++)
         {
             didSucceedLevel[idx] = null;
         }
@@ -187,10 +189,16 @@ public class GameStatus : MonoBehaviour
 
     public void OnLevelStart(int level)
     {
-        for (int idx = 0; idx < 8; idx++)
+        if (level == 0)
         {
-            bgmSources[idx].PlayOneShot(bgms[idx]);
-            bgmSources[idx].volume = idx == 0 ? 1f : 0f;
+            for (int idx = 0; idx < 8; idx++)
+            {
+                bgmSources[idx].clip = bgms[idx];
+                bgmSources[idx].Play();
+                //bgmSources[idx].PlayOneShot(bgms[idx]);
+                //Debug.Log("Playing oneshot " + idx);
+                bgmSources[idx].volume = idx == 0 ? 1f : 0f;
+            }
         }
         notesPlayedThisLevel = 0;
         successfulNotesPlayedThisLevel = 0;
@@ -242,7 +250,7 @@ public class GameStatus : MonoBehaviour
     public void OnLevelEnd()
     {
         score += successfulNotesPlayedThisLevel;
-        didSucceedLevel[levelNum] = successfulNotesPlayedThisLevel >= levelTimings[levelNum].minNotesToSucceed;
+        didSucceedLevel[levelNum] = true;
 
         int activeIdx = 0;
         if (didSucceedLevel[3] ?? false) activeIdx += 4;
@@ -250,6 +258,7 @@ public class GameStatus : MonoBehaviour
         if (levelNum >= numLevels && DidPlayersWin()) activeIdx += 1;
         for (int idx = 0; idx < 8; idx++)
         {
+            Debug.Log("Level end... new music.");
             bgmSources[idx].volume = idx == activeIdx ? 1f : 0f;
         }
     }

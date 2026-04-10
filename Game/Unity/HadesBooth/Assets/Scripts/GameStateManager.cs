@@ -19,7 +19,8 @@ public class GameStateManager : MonoBehaviour
 
         ResetAndWait reset = new ResetAndWait(gameStatus, id:"Reset and wait for next game");
         LevelState[] levels = new LevelState[gameStatus.numLevels];
-        for (int levelNum = 0; levelNum <= gameStatus.numLevels; levelNum++)
+        //for (int levelNum = 0; levelNum <= gameStatus.numLevels; levelNum++)
+        for (int levelNum = 0; levelNum < gameStatus.numLevels; levelNum++)
         {
             levels[levelNum] = new LevelState(gameStatus, levelNum, $"Level {levelNum}");
         }

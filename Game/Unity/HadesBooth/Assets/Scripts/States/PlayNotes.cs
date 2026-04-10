@@ -1,4 +1,5 @@
-﻿
+﻿/* For Kenechukwu debugging*/
+using UnityEngine;
 
 public class PlayNotes : GameLinearStateMachine
 {
@@ -7,6 +8,9 @@ public class PlayNotes : GameLinearStateMachine
     public PlayNotes(GameStatus status, int level, string id = null) : base(status, id)
     {
         levelNum = level;
+        /* Kenechukwu Debug */
+        Debug.Log("levelNum = " + levelNum + " out of size " + status.levelTimings.Length);
+
         int prevTimeMs = status.levelTimings[levelNum].conductorNotes[0].msSinceLevelStart;
         for (int idx = 0; idx < status.levelTimings[levelNum].conductorNotes.Length; idx++)
         {
