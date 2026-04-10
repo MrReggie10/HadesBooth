@@ -11,8 +11,8 @@ public class LevelState : GameNetworkedStateMachine
         playAndReadNotes.AddState(new ReadConductorNotes(status, levelNum, id: $"Level {levelNum} read conductor notes"));
         playAndReadNotes.AddState(new ReadLyreNotes(status, levelNum, true, id: $"Level {levelNum} read lyre notes"));
         DidLevelSucceed checkSuccess = new DidLevelSucceed(status, $"Check success of level {levelNum}");
-        GiveFeedback success = new GiveFeedback(status, true, $"Successful level {levelNum}");
-        GiveFeedback fail = new GiveFeedback(status, false, $"Failed level {levelNum}");
+        GiveFeedback success = new GiveFeedback(status, true, $"Successful level {levelNum}", status.levelTimings[levelNum].measureLengthMs / 1000f);
+        GiveFeedback fail = new GiveFeedback(status, false, $"Failed level {levelNum}", status.levelTimings[levelNum].measureLengthMs / 1000f);
 
         SetInitialState(playAndReadNotes);
         AddTransition(playAndReadNotes, checkSuccess);

@@ -250,7 +250,8 @@ public class GameStatus : MonoBehaviour
     public void OnLevelEnd()
     {
         score += successfulNotesPlayedThisLevel;
-        didSucceedLevel[levelNum] = true;
+        //didSucceedLevel[levelNum] = true;
+        didSucceedLevel[levelNum] = successfulNotesPlayedThisLevel >= levelTimings[levelNum].minNotesToSucceed;
 
         int activeIdx = 0;
         if (didSucceedLevel[3] ?? false) activeIdx += 4;
