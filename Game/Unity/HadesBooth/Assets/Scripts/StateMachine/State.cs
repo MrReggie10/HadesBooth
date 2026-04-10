@@ -93,7 +93,7 @@ public class State<TStatus, TTransition> : IState<TStatus> where TTransition : I
 
     public virtual void Cleanup()
     {
+        Debug.Log($"Finished running {this} after {timeSinceStart}s");
         stateStartTime = -1;
-        Debug.Log($"Finished running {this}");
     }
 }
