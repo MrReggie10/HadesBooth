@@ -9,8 +9,7 @@ public class PlayNotes : GameLinearStateMachine
     {
         levelNum = level;
 
-        int prevTimeMs = status.levelTimings[levelNum].conductorNotes[0].msSinceLevelStart;
-        for (int idx = 0; idx < status.levelTimings[levelNum].conductorNotes.Length; idx++)
+        if (levelNum >= 0 && levelNum < status.levelTimings.Length && status.levelTimings[levelNum].conductorNotes.Length > 0)
         {
             int prevTimeMs = status.levelTimings[levelNum].conductorNotes[0].msSinceLevelStart;
             for (int idx = 0; idx < status.levelTimings[levelNum].conductorNotes.Length; idx++)
