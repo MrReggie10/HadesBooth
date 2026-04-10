@@ -115,7 +115,7 @@ public abstract class ReadNotes : GameState<DefaultTransition>
             else if (failOnIncorrect) playerStatuses[playerIdx][currentNoteIdx] = SuccessTransition.Fail;
         }
 
-        if (status.miscUi)
+        if (status.miscUi && currentNote.HasValue)
         {
             status.miscUi.text = $"Note index {currentNoteIdx}, color {currentNote?.noteColor}";
         }
