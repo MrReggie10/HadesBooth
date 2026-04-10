@@ -38,9 +38,9 @@ public class ConductorDetector : MonoBehaviour
         blobDetector = SimpleBlobDetector.create(param);
         
         if (!dot?.TryGetComponent(out dotImage) ?? false) Debug.LogWarning("Conductor dot does not have an image");
-        if (!maskDot?.TryGetComponent(out maskedDotImage) ?? false) Debug.LogWarning("Conductor mask dot does not have an image");
+        //if (!maskDot?.TryGetComponent(out maskedDotImage) ?? false) Debug.LogWarning("Conductor mask dot does not have an image");
         if (!dot?.transform.parent.TryGetComponent(out dotParent) ?? false) Debug.LogWarning("Dot's parent has no rect transform");
-        if (!maskDot?.transform.parent.TryGetComponent(out maskDotParent) ?? false) Debug.LogWarning("Mask dot's parent has no rect transform");
+        //if (!maskDot?.transform.parent.TryGetComponent(out maskDotParent) ?? false) Debug.LogWarning("Mask dot's parent has no rect transform");
     }
 
     protected Mat GetMaskedImage()
@@ -88,7 +88,7 @@ public class ConductorDetector : MonoBehaviour
         using Mat mask = GetMaskedImage();
         if (!maskedTexture) maskedTexture = new Texture2D(mask.width(), mask.height(), TextureFormat.R8, false);
         Utils.matToTexture2D(mask, maskedTexture);
-        maskedImage.texture = maskedTexture;
+        //Kenechukwu debug maskedImage.texture = maskedTexture;
         MatOfKeyPoint keypointMat = new MatOfKeyPoint();
         blobDetector.setParams(GetBlobParams());
         blobDetector.detect(mask, keypointMat);

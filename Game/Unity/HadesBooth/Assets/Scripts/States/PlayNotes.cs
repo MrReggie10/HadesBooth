@@ -1,4 +1,5 @@
-﻿
+﻿/* For Kenechukwu debugging*/
+using UnityEngine;
 
 public class PlayNotes : GameLinearStateMachine
 {
@@ -7,7 +8,9 @@ public class PlayNotes : GameLinearStateMachine
     public PlayNotes(GameStatus status, int level, string id = null) : base(status, id)
     {
         levelNum = level;
-        if (levelNum >= 0 && levelNum < status.levelTimings.Length && status.levelTimings[levelNum].conductorNotes.Length > 0)
+
+        int prevTimeMs = status.levelTimings[levelNum].conductorNotes[0].msSinceLevelStart;
+        for (int idx = 0; idx < status.levelTimings[levelNum].conductorNotes.Length; idx++)
         {
             int prevTimeMs = status.levelTimings[levelNum].conductorNotes[0].msSinceLevelStart;
             for (int idx = 0; idx < status.levelTimings[levelNum].conductorNotes.Length; idx++)
