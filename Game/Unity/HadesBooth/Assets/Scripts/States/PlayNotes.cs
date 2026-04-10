@@ -11,12 +11,14 @@ public class PlayNotes : GameLinearStateMachine
 
         if (levelNum >= 0 && levelNum < status.levelTimings.Length && status.levelTimings[levelNum].conductorNotes.Length > 0)
         {
-            int prevTimeMs = status.levelTimings[levelNum].conductorNotes[0].msSinceLevelStart;
-            for (int idx = 0; idx < status.levelTimings[levelNum].conductorNotes.Length; idx++)
+            NoteTiming[] notes = status.levelTimings[levelNum].conductorNotes;
+            for (int idx = 0; idx < notes.Length; idx++)
             {
-                NoteTiming note = status.levelTimings[levelNum].conductorNotes[idx];
-                AddState(new WaitForTime(status, (note.msSinceLevelStart - prevTimeMs) / 1000f, setup: () => status.SetConductorFlower(note.note), id: $"Playing conductor note {idx} ({note.noteColor})"));
-                prevTimeMs = note.msSinceLevelStart;
+                NoteTiming note = notes[idx];
+                int nextNoteStart = idx < notes.Length - 1
+                    ? notes[idx + 1].msSinceLevelStart
+                    : status.levelTimings[levelNum].measureLengthMs * 2;
+                AddState(new WaitForTime(status, (nextNoteStart - note.msSinceLevelStart) / 1000f, setup: () => status.SetConductorFlower(note.note), id: $"Playing conductor note {idx} ({note.noteColor})"));
             }
         }
     }

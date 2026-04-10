@@ -273,7 +273,7 @@ public class GameStatus : MonoBehaviour
 
     public void SetConductorFlower(Note? note)
     {
-        // Debug.Log($"Setting conductor flower to {note?.GetColorString()}");
+        Debug.Log($"Setting conductor flower to {note?.GetColorString()}");
         if (conductorController != null)
         {
             if (note == null)
@@ -338,7 +338,7 @@ public class GameStatus : MonoBehaviour
         {
             message += $" {timing.delayMs} {timing.flowerIdx} {timing.colorString}";
         }
-        Debug.Log("message: {message}");
+        Debug.Log($"message: {message}");
         flowerWall?.SendSerialMessage(message);
     }
 
