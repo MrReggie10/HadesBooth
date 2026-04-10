@@ -68,6 +68,7 @@ public class ParallelDecisionState<TStatus, TTransition> : State<TStatus, TTrans
             if (transition != null)
             {
                 toRemove.Add(state);
+                state.Cleanup();
                 if (state is State<TStatus, TTransition> tState && tState == transitionState && transition is TTransition tTransition) // last part must be true if first two are, just need conversion
                 {
                     finalTransition = tTransition;

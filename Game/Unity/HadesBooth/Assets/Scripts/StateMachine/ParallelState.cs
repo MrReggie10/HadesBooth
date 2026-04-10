@@ -51,6 +51,7 @@ public class ParallelState<TStatus> : State<TStatus, DefaultTransition>
             if (transition != null)
             {
                 toRemove.Add(state);
+                state.Cleanup();
             }
         }
 
