@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4514a51089597440bbbd86098940bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MessageListener
-  arduinoType: 1
+  arduinoType: 3
   gameStatus: {fileID: 2070746971}
 --- !u!114 &14125431 stripped
 MonoBehaviour:
@@ -940,7 +940,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &359415884
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1020,11 +1020,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 128384, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: m_Name
-      value: Lyre2Controller
+      value: GuitarController
       objectReference: {fileID: 0}
     - target: {fileID: 128384, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 405068, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1271,7 +1271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &966643791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1296,7 +1296,7 @@ MonoBehaviour:
   canvas: {fileID: 2050350204}
   dot: {fileID: 1984580085}
   maskedImage: {fileID: 0}
-  maskDot: {fileID: 0}
+  maskDot: {fileID: 1984580085}
 --- !u!4 &966643792
 Transform:
   m_ObjectHideFlags: 0
@@ -1981,7 +1981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 128384, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 405068, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2065,19 +2065,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4514a51089597440bbbd86098940bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MessageListener
-  arduinoType: 1
+  arduinoType: 2
   gameStatus: {fileID: 2070746971}
---- !u!114 &1790099645 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
-  m_PrefabInstance: {fileID: 1790099641}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790099643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1820957930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2139,6 +2128,10 @@ PrefabInstance:
       value: COM4
       objectReference: {fileID: 0}
     - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
       propertyPath: messageListener
       value: 
       objectReference: {fileID: 1820957932}
@@ -2174,17 +2167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MessageListener
   arduinoType: 0
   gameStatus: {fileID: 2070746971}
---- !u!114 &1820957934 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11442534, guid: a65acf0cbf56b80419f74ebf0bc845f4, type: 3}
-  m_PrefabInstance: {fileID: 1820957930}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1820957932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc5f48af2cffd747a079fe8c632e2c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1984580084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2697,12 +2679,12 @@ MonoBehaviour:
   minScoreToWin: 27
   levelWinSfx: {fileID: 8300000, guid: 9d4ea684ab3f9274e855ffc1aa5064d1, type: 3}
   levelLoseSfx: {fileID: 0}
-  conductorDetector: {fileID: 966643791}
-  conductorController: {fileID: 1790099645}
+  conductorDetector: {fileID: 0}
+  conductorController: {fileID: 0}
   conductorSuccessSfx: {fileID: 8300000, guid: fd760a825e1f724429285aa9d66dffd0, type: 3}
   conductorFailSfx: {fileID: 0}
   numLyreFlowers: 6
-  lyreController: {fileID: 1820957934}
+  lyreController: {fileID: 0}
   lyreSuccessSfx: {fileID: 8300000, guid: 98062342afa5f3c4aa76823c8ad65f60, type: 3}
   lyreFailSfx: {fileID: 0}
   bgmSources:
@@ -2724,12 +2706,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7ac10793e08ad7d4b83875531db6ee23, type: 3}
   - {fileID: 8300000, guid: e101cd7131099c749a93e4e0c3791db4, type: 3}
   flowerWall: {fileID: 14125431}
-  debugMode: 0
   gameStateUI: {fileID: 2042862687}
   miscUi: {fileID: 1121030714}
   dmx: {fileID: 767113251}
   endingTime: 2
   sfxSource: {fileID: 2070746973}
+  useConductor: 0
+  backgroundConductorLed: 0
 --- !u!4 &2070746972
 Transform:
   m_ObjectHideFlags: 0
