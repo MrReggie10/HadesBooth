@@ -41,7 +41,6 @@ In our final installation system, a ride operator used keyboard controls to dyna
 This is the wall where the conductor would use a wand to play notes indicated by LED lights in the standalone animatronic flower. The infrared webcam is hidden in the center of the corkboard. This setup worked well in a dark room, but struggled when outside light leaked into our booth.
 ![conductor wall](Images/conductor1.jpg)
 ![conductor wall](Images/conductor2.jpg)
-![wand](Images/wand.jpg)
 
 This is the wall where the players would strum notes indicated by lights in the circular wall of animatronic flowers.
 ![flower wall](Images/flowers.jpg)
