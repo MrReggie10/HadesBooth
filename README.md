@@ -26,7 +26,7 @@ On one wall, the conductor would play a Simon-style minigame, using a wand to pl
 As the players progressed, the animatronic flowers would bloom or die (depending on the overall score), and the music and lights would update accordingly. Depending on the team's performance, a final show sequence would play before guests exit through one of two ending hallways.
 
 This is a sketch of the planned layout of the attraction's major components.
-![sketch](Images/sketch1.jpg)
+![sketch](Images/sketch.jpg)
 
 The Finite State Machine was intended to update the game state as the players progress and trigger lighting and sound effects.
 
@@ -37,9 +37,9 @@ The Finite State Machine was intended to update the game state as the players pr
 In our final installation system, a ride operator used keyboard controls to dynamically update the lights and animatronics to mimic the intended gameplay. Each of the individual systems functioned independently during development, but the full integration of these systems with the planned finite state machine was not completed before the booth opened. As a result, we switched to a B Mode with manual ride operator control.
 
 This is the wall where the conductor would use a wand to play notes indicated by LED lights in the standalone animatronic flower. The infrared webcam is hidden in the center of the corkboard. This setup worked well in a dark room, but struggled when outside light leaked into our booth.
-
 ![conductor wall](Images/conductor1.jpg)
 ![conductor wall](Images/conductor2.jpg)
+![wand](Images/wand.jpg)
 
 This is the wall where the players would strum notes indicated by lights in the circular wall of animatronic flowers.
 ![flower wall](Images/flowers.jpg)
@@ -114,7 +114,7 @@ Flower positions range from 0 to 6 (inclusive). Going further than this had pote
 ![1](Images/1.jpg)
 ![2](Images/2.jpg)
 ![3](Images/3.jpg)
-![4](Images/4.png)
+![4](Images/4.jng)
 ![5](Images/5.png)
 
 ## Contributions
