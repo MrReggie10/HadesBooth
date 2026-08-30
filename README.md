@@ -122,22 +122,27 @@ Flower positions range from 0 to 6 (inclusive). Going further than this could da
 Project Leadership
 * Game Chair - Taylor Roberts
 * Animatronics Chair - Maci Hanneken
+
 Game and Unity
 * Finite State Machine - Taylor Roberts, Ben Morris
 * Infrared Tracking - Ben Morris, Jacob Yakubisin, Deanna Paukstitus
 * Lighting Control - Taylor Roberts
 * Lyre and Guitar Controllers - Tay Padilla
 * Music and Charting - Kenechukwu Echezona
+
 Animatronics
 * Design and Fabrication - Maci Hanneken
 * Programming and Control - Jacob Yakubisin
 * Fabrication - Stellan Sarduy
+
 Electrical
 * Design - Taylor Roberts
 * Installation - Taylor Roberts, Jacob Yakubisin, Tay Padilla
+
 Lighting
 * Design, Programming, Installation, Testing - Taylor Roberts
 * Consultation - Cyril Neff, Sunaina Singh
+
 Operations
 * Ride Operators - Taylor Roberts, Jacob Yakubisin, Maci Hanneken, Ben Morris, Kenechukwu Echezona, Deanna Paukstitus
 
