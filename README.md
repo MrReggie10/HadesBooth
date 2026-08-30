@@ -70,7 +70,6 @@ The booth featured four LED Par lights, all mounted within the central room. Cue
 | `bmode/Game`                  | Controls for manual operation                          |
 
 ## Setup
-
 Lighting control
 * Checkout the `GameMain` branch
 * Use Unity 6000.3.9f1
@@ -88,6 +87,7 @@ Keyboard Controls (lighting effects)
 | `1` | State 1         |
 | `2` | State 2         |
 | `3` | State 3         |
+
 States 0-3 represent varying levels of simulated player progress, from 0 (worst) to 3 (best).
 
 Flower controls
@@ -108,7 +108,8 @@ Keyboard Controls (Flower Wall)
 | `d` | Sets all flowers to position 5 (almost open)   |
 | `o` | Increases flower position by 1                 |
 | `p` | Decreases flower position by 1                 |
-Flower positions range from 0 to 6 (inclusive). Going further than this had potential to damage the flower mechanism.
+
+Flower positions range from 0 to 6 (inclusive). Going further than this could damage the flower mechanism.
 
 ## Media
 ![1](Images/1.jpg)
@@ -150,7 +151,6 @@ The 2026 Theme Park Engineering Group, Sustainable Earth, and American Society o
 * Elina Lee - Props Chair
 
 ## Libraries and Technologies
-
 * Stepper by Arduino
 * Unity
 * Ardity
