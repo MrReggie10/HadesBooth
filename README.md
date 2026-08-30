@@ -9,6 +9,8 @@ The final project installation was a reduced version of the original concept, an
 ## Features
 * Infrared Tracking
   * Uses an infrared webcam and OpenCV to detect a custom-made wand
+* Animatronic flowers
+ * Seven custom-built animatronic flowers with individually controllable petals and programmable LEDs
 * Show Control
   * Uses Art-Net and QLC+ to trigger DMX lighting cues
 * Guitar and Lyre Controllers
