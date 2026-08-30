@@ -115,8 +115,8 @@ Flower positions range from 0 to 6 (inclusive). Going further than this could da
 ![1](Images/1.jpg)
 ![2](Images/2.jpg)
 ![3](Images/3.jpg)
-![4](Images/4.jng)
-![5](Images/5.png)
+![4](Images/4.jpg)
+![5](Images/5.jpg)
 
 ## Contributions
 Project Leadership
